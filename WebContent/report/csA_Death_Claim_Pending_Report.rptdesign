@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <property name="units">in</property>
+    <method name="beforeFactory"><![CDATA[importPackage( Packages.com.dxc.reports.birt);
+importPackage( Packages.com.dxc.reports.model);
+bu=new BirtUtil();
+login=reportContext.getHttpServletRequest().getSession().getAttribute("login");
+vars["session"] ="active";
+
+if(bu.checkSession(login)=='inactive')
+{
+    var table = reportContext.getReportRunnable().designHandle.getDesignHandle().findElement("data_table");
+    table.drop();
+    vars["session"] ="inactive";
+}]]></method>
+    <method name="afterRender"><![CDATA[importPackage( Packages.com.dxc.reports.birt);
+importPackage( Packages.com.dxc.reports.validator);
+inputValidator=new InputValidator();
+if(vars["session"]=='active')
+{
+if(FileAccess.fileCreated==0 )
+{
+
+FileAccess.fileCreated=1;
+fa=new FileAccess();
+var reportName = reportContext.getReportRunnable().getReportName();
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));
+vars["storedFileLocation"]=fa.sendFile('--ALL--:--ALL--:--ALL--:--ALL--:--ALL--',params["DBPARAM"].value,reportName,"No_Input","No_Input","No_Input",params["DocType"].value,"No_Input","No_Input",params["SendEmail"].value);
+if(History.historyCreated==0){
+history = new History();
+  //HistoryJson.createJsonforMongo(vars["storedFileLocation"],params["login"].value,vars["allReportParaFaceVal"],params["DBPARAM"].value,reportName,params["DocType"].value,params["SendEmail"].value);
+  //History.historyCreated=1;
+  /*HistoryJson.saveFileInMongoDB() ForTesting Creating Method*/
+  history.setHistory("Success",params["login"].value,"No Input Parameters",(new Date()).getTime(),vars["startTime"],reportName,params["DBPARAM"].value,vars["storedFileLocation"],params["SendEmail"].value,params["DocType"].value);
+  History.historyCreated=1;
+
+}
+}
+
+}
+
+]]></method>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="login" id="6650">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="DBPARAM" id="495">
+            <property name="hidden">false</property>
+            <text-property name="helpText">DBPARAM</text-property>
+            <text-property name="promptText">ClientName</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ReportName" id="6656">
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <method name="getDefaultValueList"><![CDATA[var reportName = reportContext.getReportRunnable().getReportName();
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));]]></method>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="SendEmail" id="6651">
+            <text-property name="helpText">SendEmail</text-property>
+            <text-property name="promptText">SendEmail</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="DocType" id="4383">
+            <text-property name="helpText">docType</text-property>
+            <text-property name="promptText">DocType</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">xls</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">xls</property>
+                    <property name="label">xls</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="BPS" id="4">
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.birt );
+rp=new SetDatabaseDetails();
+dbDetails=new Array();
+dbDetails=rp.dbDetailsReader(params["DBPARAM"].value);
+this.setExtensionProperty("odaURL",dbDetails[0]);
+this.setExtensionProperty("odaUser",dbDetails[1]);
+this.setExtensionProperty("odaPassword",dbDetails[2]);
+vars["startTime"]=(new Date()).getTime();]]></method>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">com.ibm.db2.jcc.DB2Driver</property>
+            <property name="odaURL">jdbc:db2://20.15.86.32:50002/ACCELAIG</property>
+            <property name="odaUser">uniauser1</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">VW5pYVUkZXIx</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ALLVALUES" id="5">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">COMPANYCODE</property>
+                    <text-property name="displayName">COMPANYCODE</text-property>
+                    <text-property name="heading">COMPANYCODE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">REGION</property>
+                    <text-property name="displayName">REGION</text-property>
+                    <text-property name="heading">REGION</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">POLICY_NUMBER</property>
+                    <text-property name="displayName">POLICY_NUMBER</text-property>
+                    <text-property name="heading">POLICY_NUMBER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">FACE_AMOUNT</property>
+                    <text-property name="displayName">FACE_AMOUNT</text-property>
+                    <text-property name="heading">FACE_AMOUNT</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PRODUCTTYPE</property>
+                    <text-property name="displayName">PRODUCTTYPE</text-property>
+                    <text-property name="heading">PRODUCTTYPE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PRODUCTSYBTYPE</property>
+                    <text-property name="displayName">PRODUCTSYBTYPE</text-property>
+                    <text-property name="heading">PRODUCTSYBTYPE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">HOSTSYSTEM</property>
+                    <text-property name="displayName">HOSTSYSTEM</text-property>
+                    <text-property name="heading">HOSTSYSTEM</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">COMPANYCODE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">REGION</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">POLICY_NUMBER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">FACE_AMOUNT</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">PRODUCTTYPE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">PRODUCTSYBTYPE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">HOSTSYSTEM</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.birt);
+FileAccess.fileCreated=0;
+History.historyCreated=0;
+]]></method>
+            <property name="dataSource">BPS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">COMPANYCODE</property>
+                    <property name="nativeName">COMPANYCODE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">REGION</property>
+                    <property name="nativeName">REGION</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">POLICY_NUMBER</property>
+                    <property name="nativeName">POLICY_NUMBER</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">FACE_AMOUNT</property>
+                    <property name="nativeName">FACE_AMOUNT</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">PRODUCTTYPE</property>
+                    <property name="nativeName">PRODUCTTYPE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">PRODUCTSYBTYPE</property>
+                    <property name="nativeName">PRODUCTSYBTYPE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">HOSTSYSTEM</property>
+                    <property name="nativeName">HOSTSYSTEM</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select CC.DESCR AS COMPANYCODE, REGION.DESCR AS REGION, policy.policy_number, policy.face_amount, PRODUCTCODE.DESCR AS PRODUCTTYPE, SUBTYPE.DESCR AS PRODUCTSYBTYPE, HOST.HOST_SYSTEM AS HOSTSYSTEM from 
+cyberlife.policy policy
+LEFT OUTER JOIN AV.COMPANYCODE CC ON CC.INTERNAL_VALUE=policy.COMPANY_ID
+LEFT OUTER JOIN AV.REGION REGION ON REGION.INTERNAL_VALUE=policy.REGION_ID
+LEFT OUTER JOIN AV.POLICYPRODUCTCODE PRODUCTCODE ON policy.PRODUCT_TYPE_ID=PRODUCTCODE.INTERNAL_VALUE
+LEFT OUTER JOIN AV.POLICYPRODUCTSUBTYPE SUBTYPE ON POLICY.PRODUCT_SUBTYPE_ID=SUBTYPE.INTERNAL_VALUE
+LEFT OUTER JOIN BPOCLIENTEXT.LK_HOST_SYSTEM HOST ON POLICY.LK_HOST_SYSTEM_ID=HOST.LK_HOST_SYSTEM_ID
+where (POLICY.lk_host_system_id = 16 and POLICY.status_id = 931) or (POLICY.lk_host_system_id = 57 and POLICY.billing_status_id = 4 and POLICY.status_id <> 903) or 
+(POLICY.lk_host_system_id not in (16,57) and POLICY.billing_status_id = 4) or (POLICY.lk_host_system_id = 56 and POLICY.status_id = 931)]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>COMPANYCODE</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>COMPANYCODE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>COMPANYCODE</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REGION</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>REGION</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REGION</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>POLICY_NUMBER</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>15</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>POLICY_NUMBER</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>POLICY_NUMBER</design:label>
+            <design:formattingHints>
+              <design:displaySize>15</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>FACE_AMOUNT</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>14</design:precision>
+            <design:scale>2</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>FACE_AMOUNT</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>FACE_AMOUNT</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PRODUCTTYPE</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PRODUCTTYPE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PRODUCTTYPE</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PRODUCTSYBTYPE</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PRODUCTSYBTYPE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PRODUCTSYBTYPE</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>HOSTSYSTEM</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>32</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>HOSTSYSTEM</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>HOSTSYSTEM</design:label>
+            <design:formattingHints>
+              <design:displaySize>32</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <data id="6649">
+            <property name="fontSize">large</property>
+            <property name="fontWeight">bold</property>
+            <property name="color">red</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">Error Message</text-property>
+                    <expression name="expression" type="javascript">importPackage( Packages.com.dxc.reports.validator);&#13;
+importPackage( Packages.com.dxc.reports.util);&#13;
+readProperties=new ReadProperties();&#13;
+inputValidator=new InputValidator();&#13;
+var errorMessage="";&#13;
+if(inputValidator.emailValidator(params["SendEmail"].value)!=true)&#13;
+          errorMessage=errorMessage+readProperties.getMessage("birt","INVALID_EMAIL1")+params["SendEmail"].value+readProperties.getMessage("birt","INVALID_EMAIL2");&#13;
+if(vars["session"]=='inactive')&#13;
+{&#13;
+    errorMessage=readProperties.getMessage("birt","INVALID_SESSION");&#13;
+}&#13;
+errorMessage;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">false</property>
+                </structure>
+            </list-property>
+            <property name="resultSetColumn">Column Binding</property>
+        </data>
+        <data id="7397">
+            <property name="fontSize">14pt</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">Login</text-property>
+                    <expression name="expression" type="javascript">if(vars["session"]=="inactive")&#13;
+"Navigate to Login";</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <property name="resultSetColumn">Column Binding</property>
+            <list-property name="action">
+                <structure>
+                    <property name="linkType">hyperlink</property>
+                    <expression name="uri" type="javascript">"../login"</expression>
+                    <property name="targetWindow">_self</property>
+                </structure>
+            </list-property>
+        </data>
+        <data id="6658">
+            <property name="fontSize">large</property>
+            <property name="fontWeight">bold</property>
+            <property name="color">blue</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">Report Details</text-property>
+                    <expression name="expression" type="javascript">var reportName = reportContext.getReportRunnable().getReportName();&#13;
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);&#13;
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));&#13;
+reportName=params["DBPARAM"].value+"--"+reportName;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">false</property>
+                </structure>
+            </list-property>
+            <property name="resultSetColumn">Column Binding</property>
+        </data>
+        <data id="6665">
+            <property name="fontSize">14pt</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">Show History</text-property>
+                    <expression name="expression" type="javascript">"Navigate to History"</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <property name="resultSetColumn">Column Binding</property>
+            <list-property name="action">
+                <structure>
+                    <property name="linkType">hyperlink</property>
+                    <expression name="uri" type="javascript">var reportName = reportContext.getReportRunnable().getReportName();&#13;
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);&#13;
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));&#13;
+"../showHistory?report_name="+reportName+"&amp;client_name="+params["DBPARAM"].value+"&amp;page_number=1&amp;recordsPerPage=10";</expression>
+                    <property name="targetWindow">_self</property>
+                </structure>
+            </list-property>
+        </data>
+        <table name="data_table" id="6">
+            <property name="dataSet">ALLVALUES</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">COMPANYCODE</property>
+                    <text-property name="displayName">COMPANYCODE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["COMPANYCODE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">REGION</property>
+                    <text-property name="displayName">REGION</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["REGION"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">POLICY_NUMBER</property>
+                    <text-property name="displayName">POLICY_NUMBER</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["POLICY_NUMBER"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">FACE_AMOUNT</property>
+                    <text-property name="displayName">FACE_AMOUNT</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["FACE_AMOUNT"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">PRODUCTTYPE</property>
+                    <text-property name="displayName">PRODUCTTYPE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PRODUCTTYPE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PRODUCTSYBTYPE</property>
+                    <text-property name="displayName">PRODUCTSYBTYPE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PRODUCTSYBTYPE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">HOSTSYSTEM</property>
+                    <text-property name="displayName">HOSTSYSTEM</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["HOSTSYSTEM"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="45"/>
+            <column id="46"/>
+            <column id="47"/>
+            <column id="48"/>
+            <column id="49"/>
+            <column id="50"/>
+            <column id="51"/>
+            <header>
+                <row id="7">
+                    <cell id="8">
+                        <label id="9">
+                            <text-property name="text">COMPANYCODE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="10">
+                        <label id="11">
+                            <text-property name="text">REGION</text-property>
+                        </label>
+                    </cell>
+                    <cell id="12">
+                        <label id="13">
+                            <text-property name="text">POLICY_NUMBER</text-property>
+                        </label>
+                    </cell>
+                    <cell id="14">
+                        <label id="15">
+                            <text-property name="text">FACE_AMOUNT</text-property>
+                        </label>
+                    </cell>
+                    <cell id="16">
+                        <label id="17">
+                            <text-property name="text">PRODUCTTYPE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="18">
+                        <label id="19">
+                            <text-property name="text">PRODUCTSYBTYPE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="20">
+                        <label id="21">
+                            <text-property name="text">HOSTSYSTEM</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="22">
+                    <cell id="23">
+                        <data id="24">
+                            <property name="resultSetColumn">COMPANYCODE</property>
+                        </data>
+                    </cell>
+                    <cell id="25">
+                        <data id="26">
+                            <property name="resultSetColumn">REGION</property>
+                        </data>
+                    </cell>
+                    <cell id="27">
+                        <data id="28">
+                            <property name="resultSetColumn">POLICY_NUMBER</property>
+                        </data>
+                    </cell>
+                    <cell id="29">
+                        <data id="30">
+                            <property name="resultSetColumn">FACE_AMOUNT</property>
+                        </data>
+                    </cell>
+                    <cell id="31">
+                        <data id="32">
+                            <property name="resultSetColumn">PRODUCTTYPE</property>
+                        </data>
+                    </cell>
+                    <cell id="33">
+                        <data id="34">
+                            <property name="resultSetColumn">PRODUCTSYBTYPE</property>
+                        </data>
+                    </cell>
+                    <cell id="35">
+                        <data id="36">
+                            <property name="resultSetColumn">HOSTSYSTEM</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="37">
+                    <cell id="38"/>
+                    <cell id="39"/>
+                    <cell id="40"/>
+                    <cell id="41"/>
+                    <cell id="42"/>
+                    <cell id="43"/>
+                    <cell id="44"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+    <property name="pageVariables">
+        <variable-element name="startTime">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="storedFileLocation">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="session">
+            <expression name="value" type="javascript">"inactive"</expression>
+            <property name="type">report</property>
+        </variable-element>
+    </property>
+</report>

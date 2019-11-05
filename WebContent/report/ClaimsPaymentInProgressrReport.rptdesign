@@ -1,0 +1,1187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <list-property name="propertyBindings">
+        <structure>
+            <property name="name">odaDriverClass</property>
+            <property name="id">4</property>
+        </structure>
+        <structure>
+            <property name="name">odaURL</property>
+            <property name="id">4</property>
+        </structure>
+        <structure>
+            <property name="name">odaUser</property>
+            <property name="id">4</property>
+        </structure>
+        <structure>
+            <property name="name">odaAutoCommit</property>
+            <property name="id">4</property>
+        </structure>
+        <structure>
+            <property name="name">odaIsolationMode</property>
+            <property name="id">4</property>
+        </structure>
+        <structure>
+            <property name="name">odaPassword</property>
+            <property name="id">4</property>
+        </structure>
+        <structure>
+            <property name="name">odaJndiName</property>
+            <property name="id">4</property>
+        </structure>
+        <structure>
+            <property name="name">OdaConnProfileName</property>
+            <property name="id">4</property>
+        </structure>
+        <structure>
+            <property name="name">OdaConnProfileStorePath</property>
+            <property name="id">4</property>
+        </structure>
+    </list-property>
+    <property name="units">in</property>
+    <method name="beforeFactory"><![CDATA[importPackage( Packages.com.dxc.reports.birt);
+importPackage( Packages.com.dxc.reports.model);
+bu=new BirtUtil();
+login=reportContext.getHttpServletRequest().getSession().getAttribute("login");
+vars["session"] ="active";
+
+if(bu.checkSession(login)=='inactive')
+{
+    var table = reportContext.getReportRunnable().designHandle.getDesignHandle().findElement("data_table");
+    table.drop();
+    vars["session"] ="inactive";
+}]]></method>
+    <method name="beforeRender"><![CDATA[if(vars["session"]=='active')
+{
+mmap = reportContext.getHttpServletRequest().getAttribute("attributeBean").getModuleOptions();
+rptdoc = reportContext.getHttpServletRequest().getAttribute("attributeBean").getReportDocumentName();
+var reportName = reportContext.getReportRunnable().getReportName();
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));
+importPackage(Packages.org.eclipse.birt.report.engine.api);
+importPackage(Packages.java.io);
+importPackage( Packages.com.dxc.reports.birt);
+importPackage( Packages.com.dxc.reports.validator);
+inputValidator=new InputValidator();
+fa = new FileAccess();
+if(params["DocType"].value=="xlsx" &amp;&amp; FileAccess.fileCreated==0)
+{
+FileAccess.fileCreated=1;
+var re = reportContext.getReportRunnable().getReportEngine();
+var mdocument = re.openReportDocument(null,rptdoc, mmap); 
+var options = new EXCELRenderOption();
+baos = new ByteArrayOutputStream();		
+options.setOutputFormat(params["DocType"].value);
+options.setOutputStream(baos);
+var ntask = re.createRenderTask(mdocument); 		
+ntask.setRenderOption(options);
+ntask.render();
+ntask.close();
+mdocument.close();
+fileDetails=new Array();
+fileDetails=fa.getFileSaveLocation(params["DBPARAM"].value,reportName);
+var reportLocation=fileDetails[0]+reportName+"_"+fileDetails[1] +"."+params["DocType"].value;
+fout = new FileOutputStream(reportLocation);   
+fout.write(baos.toByteArray());
+fout.flush();
+fout.close();  
+if(params["SendEmail"].value &amp;&amp; inputValidator.emailValidator(params["SendEmail"].value)==true){
+fa.sendEmail(params["DBPARAM"].value,reportName,params["DocType"].value,reportLocation,params["SendEmail"].value);
+}
+} 
+if(params["DocType"].value=="pdf" &amp;&amp; FileAccess.fileCreated==0)
+{
+FileAccess.fileCreated=1;
+var re = reportContext.getReportRunnable().getReportEngine();
+var mdocument = re.openReportDocument(null,rptdoc, mmap); 
+var options = new PDFRenderOption();
+baos = new ByteArrayOutputStream();		
+options.setOutputFormat(params["DocType"].value);
+options.setOutputStream(baos);
+var ntask = re.createRenderTask(mdocument); 		
+ntask.setRenderOption(options);
+ntask.render();
+ntask.close();
+mdocument.close();
+fileDetails=new Array();
+fileDetails=fa.getFileSaveLocation(params["DBPARAM"].value,reportName);
+var reportLocation=fileDetails[0]+reportName+"_"+fileDetails[1] +"."+params["DocType"].value;
+fout = new FileOutputStream(reportLocation);      
+fout.write(baos.toByteArray());
+fout.flush();
+fout.close();  
+if(params["SendEmail"].value &amp;&amp; inputValidator.emailValidator(params["SendEmail"].value)==true){
+fa.sendEmail(params["DBPARAM"].value,reportName,params["DocType"].value,reportLocation,params["SendEmail"].value);
+}
+} 
+vars["storedFileLocation"]=reportLocation;
+vars["allReportParaFaceVal"]="No Input Parameters";
+/*if(createHistoryJson.afterReportRender==0){
+HistoryJson = new createHistoryJson();
+  HistoryJson.createJsonforMongo(vars["storedFileLocation"],params["login"].value,vars["allReportParaFaceVal"],params["DBPARAM"].value,reportName,params["DocType"].value,params["SendEmail"].value);
+  createHistoryJson.afterReportRender=1;
+  /*HistoryJson.saveFileInMongoDB() ForTesting Creating Method
+}*/
+if(History.historyCreated==0){
+history = new History();
+  //HistoryJson.createJsonforMongo(vars["storedFileLocation"],params["login"].value,vars["allReportParaFaceVal"],params["DBPARAM"].value,reportName,params["DocType"].value,params["SendEmail"].value);
+  //History.historyCreated=1;
+  /*HistoryJson.saveFileInMongoDB() ForTesting Creating Method*/
+  history.setHistory("Success",params["login"].value,vars["allReportParaFaceVal"],(new Date()).getTime(),vars["startTime"],reportName,params["DBPARAM"].value,vars["storedFileLocation"],params["SendEmail"].value,params["DocType"].value);
+  History.historyCreated=1;
+}
+}]]></method>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="DBPARAM" id="495">
+            <property name="hidden">false</property>
+            <text-property name="helpText">DBPARAM</text-property>
+            <text-property name="promptText">ClientName</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ReportName" id="6656">
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <method name="getDefaultValueList"><![CDATA[var reportName = reportContext.getReportRunnable().getReportName();
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));]]></method>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="SendEmail" id="4382">
+            <text-property name="helpText">SendEmail</text-property>
+            <text-property name="promptText">SendEmail</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="DocType" id="4383">
+            <text-property name="helpText">docType</text-property>
+            <text-property name="promptText">DocType</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">xlsx</property>
+                    <property name="label">xlsx</property>
+                </structure>
+                <structure>
+                    <property name="value">pdf</property>
+                    <property name="label">pdf</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="login" id="6650">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="BPS" id="4">
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.birt );
+rp=new SetDatabaseDetails();
+dbDetails=new Array();
+dbDetails=rp.dbDetailsReader(params["DBPARAM"].value);
+this.setExtensionProperty("odaURL",dbDetails[0]);
+this.setExtensionProperty("odaUser",dbDetails[1]);
+this.setExtensionProperty("odaPassword",dbDetails[2]);]]></method>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">com.ibm.db2.jcc.DB2Driver</property>
+            <property name="odaURL">jdbc:db2://20.15.86.32:50002/ACCELPRU</property>
+            <property name="odaUser">uniauser1</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">VW5pYVUkZXIx</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Data Set" id="5">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">POLICYNUMBER</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">POLICYNUMBER</text-property>
+                    <text-property name="heading">POLICYNUMBER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAYMENTID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAYMENTID</text-property>
+                    <text-property name="heading">PAYMENTID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">INSUREDLASTNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">INSUREDLASTNAME</text-property>
+                    <text-property name="heading">INSUREDLASTNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">INSUREDFIRSTNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">INSUREDFIRSTNAME</text-property>
+                    <text-property name="heading">INSUREDFIRSTNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAYEELASTNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAYEELASTNAME</text-property>
+                    <text-property name="heading">PAYEELASTNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAYEEFIRSTNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAYEEFIRSTNAME</text-property>
+                    <text-property name="heading">PAYEEFIRSTNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CORPNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CORPNAME</text-property>
+                    <text-property name="heading">CORPNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">REGION</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">REGION</text-property>
+                    <text-property name="heading">REGION</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">COMPANYCODE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">COMPANYCODE</text-property>
+                    <text-property name="heading">COMPANYCODE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAY STATUS</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAY STATUS</text-property>
+                    <text-property name="heading">PAY STATUS</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">NETBENEFITPAYMENT</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">NETBENEFITPAYMENT</text-property>
+                    <text-property name="heading">NETBENEFITPAYMENT</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CHECKNUMBER</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CHECKNUMBER</text-property>
+                    <text-property name="heading">CHECKNUMBER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">DATEPAID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">DATEPAID</text-property>
+                    <text-property name="heading">DATEPAID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAY TYPE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAY TYPE</text-property>
+                    <text-property name="heading">PAY TYPE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">UPDATED_BY</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">UPDATED_BY</text-property>
+                    <text-property name="heading">UPDATED_BY</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">UPDATED_WHEN</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">UPDATED_WHEN</text-property>
+                    <text-property name="heading">UPDATED_WHEN</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAY SUBMIT DATE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAY SUBMIT DATE</text-property>
+                    <text-property name="heading">PAY SUBMIT DATE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAY SUBMIT USER</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAY SUBMIT USER</text-property>
+                    <text-property name="heading">PAY SUBMIT USER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">POL RPT STATUS</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">POL RPT STATUS</text-property>
+                    <text-property name="heading">POL RPT STATUS</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">POLICYNUMBER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">PAYMENTID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">INSUREDLASTNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">INSUREDFIRSTNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">PAYEELASTNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">PAYEEFIRSTNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">CORPNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">REGION</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">COMPANYCODE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">PAY STATUS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">NETBENEFITPAYMENT</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">CHECKNUMBER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">DATEPAID</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">PAY TYPE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">UPDATED_BY</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">UPDATED_WHEN</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">PAY SUBMIT DATE</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">PAY SUBMIT USER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">POL RPT STATUS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.birt);
+FileAccess.fileCreated=0;
+History.historyCreated=0;
+]]></method>
+            <property name="dataSource">BPS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">POLICYNUMBER</property>
+                    <property name="nativeName">POLICYNUMBER</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">PAYMENTID</property>
+                    <property name="nativeName">PAYMENTID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">INSUREDLASTNAME</property>
+                    <property name="nativeName">INSUREDLASTNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">INSUREDFIRSTNAME</property>
+                    <property name="nativeName">INSUREDFIRSTNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">PAYEELASTNAME</property>
+                    <property name="nativeName">PAYEELASTNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">PAYEEFIRSTNAME</property>
+                    <property name="nativeName">PAYEEFIRSTNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">CORPNAME</property>
+                    <property name="nativeName">CORPNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">REGION</property>
+                    <property name="nativeName">REGION</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">COMPANYCODE</property>
+                    <property name="nativeName">COMPANYCODE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">PAY STATUS</property>
+                    <property name="nativeName">PAY STATUS</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">NETBENEFITPAYMENT</property>
+                    <property name="nativeName">NETBENEFITPAYMENT</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">3</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">CHECKNUMBER</property>
+                    <property name="nativeName">CHECKNUMBER</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">DATEPAID</property>
+                    <property name="nativeName">DATEPAID</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">PAY TYPE</property>
+                    <property name="nativeName">PAY TYPE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">UPDATED_BY</property>
+                    <property name="nativeName">UPDATED_BY</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">UPDATED_WHEN</property>
+                    <property name="nativeName">UPDATED_WHEN</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">PAY SUBMIT DATE</property>
+                    <property name="nativeName">PAY SUBMIT DATE</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">PAY SUBMIT USER</property>
+                    <property name="nativeName">PAY SUBMIT USER</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">POL RPT STATUS</property>
+                    <property name="nativeName">POL RPT STATUS</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT
+        paymnt.policynumber,
+        paymnt.paymentid,
+        paymnt.insuredlastname,
+        paymnt.insuredfirstname,
+        paymnt.payeelastname,
+        paymnt.payeefirstname,
+        paymnt.corpname,
+        region.descr AS "REGION",
+        compcode.descr AS "COMPANYCODE",
+        clmpaysts.DESCR AS "PAY STATUS",
+        paymnt.netbenefitpayment,
+        paymnt.checknumber,
+        paymnt.datepaid,
+        paytype.descr AS "PAY TYPE",
+        paymnt.updated_by,
+        paymnt.updated_when,
+        PAYMENTHISTORY1.updated_when AS "PAY SUBMIT DATE",
+        PAYMENTHISTORY1.userid AS "PAY SUBMIT USER",
+        polrptstat.descr AS "POL RPT STATUS" 
+    FROM
+        CLAIMS.payment paymnt 
+    LEFT OUTER JOIN
+        AV.CLAIMPAYMENTSTATUS CLMPAYSTS 
+            ON paymnt.CLAIMPAYMENTSTATUS = CLMPAYSTS.INTERNAL_VALUE 
+    LEFT OUTER JOIN
+        AV.REGION REGION 
+            ON paymnt.REGIONID = REGION.INTERNAL_VALUE 
+    LEFT OUTER JOIN
+        AV.CLAIMPAYMENTTYPES PAYTYPE 
+            ON paymnt.PAYMENTTYPECODE = PAYTYPE.INTERNAL_VALUE 
+    LEFT OUTER JOIN
+        AV.COMPANYCODE COMPCODE 
+            ON paymnt.companycode = CAST(COMPCODE.INTERNAL_VALUE AS CHAR (10)) 
+    LEFT OUTER JOIN
+        CLAIMS.PAYMENTHISTORY AS PAYMENTHISTORY1 
+            ON paymnt.paymentid = PAYMENTHISTORY1.paymentid 
+    LEFT OUTER JOIN
+        CLAIMS.CLAIMPOLICY clmpol 
+            ON paymnt.claimid = clmpol.claimid 
+            AND paymnt.policynumber = clmpol.policynumber 
+    LEFT OUTER JOIN
+        AV.POLICYREPORTINGSTATUS polrptstat 
+            ON clmpol.reporting_status = polrptstat.internal_value 
+    LEFT JOIN
+        claims.paymenthistory AS paymenthistory2 
+            ON paymnt.paymentid = paymenthistory2.paymentid 
+            AND paymenthistory2.updated_when < PAYMENTHISTORY1.updated_when 
+    WHERE
+        paymnt.claimpaymentstatus NOT IN (
+            9, 8
+        ) 
+  	AND (paymenthistory2.updated_when IS NULL 
+	)
+    ORDER BY
+    paymnt.updated_when ASC]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">custom</property>
+            <property name="height">100in</property>
+            <property name="width">80in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <data id="6649">
+            <property name="fontSize">large</property>
+            <property name="fontWeight">bold</property>
+            <property name="color">red</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">Error Message</text-property>
+                    <expression name="expression" type="javascript">importPackage( Packages.com.dxc.reports.validator);&#13;
+importPackage( Packages.com.dxc.reports.util);&#13;
+readProperties=new ReadProperties();&#13;
+inputValidator=new InputValidator();&#13;
+var errorMessage="";&#13;
+if(inputValidator.emailValidator(params["SendEmail"].value)!=true)&#13;
+          errorMessage=readProperties.getMessage("birt","INVALID_EMAIL1")+params["SendEmail"].value+readProperties.getMessage("birt","INVALID_EMAIL2");&#13;
+if(vars["session"]=='inactive')&#13;
+{&#13;
+    errorMessage=readProperties.getMessage("birt","INVALID_SESSION");&#13;
+}&#13;
+errorMessage;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <property name="resultSetColumn">Column Binding</property>
+        </data>
+        <data id="7397">
+            <property name="fontSize">14pt</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">Login</text-property>
+                    <expression name="expression" type="javascript">if(vars["session"]=="inactive")&#13;
+"Navigate to Login";</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <property name="resultSetColumn">Column Binding</property>
+            <list-property name="action">
+                <structure>
+                    <property name="linkType">hyperlink</property>
+                    <expression name="uri" type="javascript">"../login"</expression>
+                    <property name="targetWindow">_self</property>
+                </structure>
+            </list-property>
+        </data>
+        <data id="6658">
+            <property name="fontSize">large</property>
+            <property name="fontWeight">bold</property>
+            <property name="color">blue</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">Report Details</text-property>
+                    <expression name="expression" type="javascript">var reportName = reportContext.getReportRunnable().getReportName();&#13;
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);&#13;
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));&#13;
+reportName=params["DBPARAM"].value+"--"+reportName;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">false</property>
+                </structure>
+            </list-property>
+            <property name="resultSetColumn">Column Binding</property>
+        </data>
+        <data id="7201">
+            <property name="fontSize">14pt</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">Show History</text-property>
+                    <expression name="expression" type="javascript">"Navigate to History"</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <property name="resultSetColumn">Column Binding</property>
+            <list-property name="action">
+                <structure>
+                    <property name="linkType">hyperlink</property>
+                    <expression name="uri" type="javascript">var reportName = reportContext.getReportRunnable().getReportName();&#13;
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);&#13;
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));&#13;
+"../showHistory?report_name="+reportName+"&amp;client_name="+params["DBPARAM"].value+"&amp;page_number=1&amp;recordsPerPage=10";</expression>
+                    <property name="targetWindow">_self</property>
+                </structure>
+            </list-property>
+        </data>
+        <table name="data_table" id="6">
+            <property name="textAlign">left</property>
+            <property name="dataSet">Data Set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">POLICYNUMBER</property>
+                    <text-property name="displayName">POLICYNUMBER</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["POLICYNUMBER"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PAYMENTID</property>
+                    <text-property name="displayName">PAYMENTID</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PAYMENTID"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">INSUREDLASTNAME</property>
+                    <text-property name="displayName">INSUREDLASTNAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["INSUREDLASTNAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">INSUREDFIRSTNAME</property>
+                    <text-property name="displayName">INSUREDFIRSTNAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["INSUREDFIRSTNAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PAYEELASTNAME</property>
+                    <text-property name="displayName">PAYEELASTNAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PAYEELASTNAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PAYEEFIRSTNAME</property>
+                    <text-property name="displayName">PAYEEFIRSTNAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PAYEEFIRSTNAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">CORPNAME</property>
+                    <text-property name="displayName">CORPNAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CORPNAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">REGION</property>
+                    <text-property name="displayName">REGION</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["REGION"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">COMPANYCODE</property>
+                    <text-property name="displayName">COMPANYCODE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["COMPANYCODE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PAY STATUS</property>
+                    <text-property name="displayName">PAY STATUS</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PAY STATUS"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">NETBENEFITPAYMENT</property>
+                    <text-property name="displayName">NETBENEFITPAYMENT</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["NETBENEFITPAYMENT"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">CHECKNUMBER</property>
+                    <text-property name="displayName">CHECKNUMBER</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CHECKNUMBER"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">DATEPAID</property>
+                    <text-property name="displayName">DATEPAID</text-property>
+                    <expression name="expression" type="javascript">"";&#13;
+if(dataSetRow["DATEPAID"])&#13;
+{&#13;
+ (dataSetRow["DATEPAID"].getMonth()+1)+"/"+dataSetRow["DATEPAID"].getDate()+"/"+(dataSetRow["DATEPAID"].getYear()+1900);&#13;
+}</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">PAY TYPE</property>
+                    <text-property name="displayName">PAY TYPE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PAY TYPE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">UPDATED_BY</property>
+                    <text-property name="displayName">UPDATED_BY</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["UPDATED_BY"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">UPDATED_WHEN</property>
+                    <text-property name="displayName">UPDATED_WHEN</text-property>
+                    <expression name="expression" type="javascript">"";&#13;
+if(dataSetRow["UPDATED_WHEN"])&#13;
+{df = new java.text.SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");&#13;
+df.format(dataSetRow["UPDATED_WHEN"]);&#13;
+}</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">PAY SUBMIT DATE</property>
+                    <text-property name="displayName">PAY SUBMIT DATE</text-property>
+                    <expression name="expression" type="javascript">"";&#13;
+if(dataSetRow["PAY SUBMIT DATE"])&#13;
+{&#13;
+df = new java.text.SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");&#13;
+df.format(dataSetRow["PAY SUBMIT DATE"]);&#13;
+}</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">PAY SUBMIT USER</property>
+                    <text-property name="displayName">PAY SUBMIT USER</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PAY SUBMIT USER"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">POL RPT STATUS</property>
+                    <text-property name="displayName">POL RPT STATUS</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["POL RPT STATUS"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="105"/>
+            <column id="107">
+                <property name="repeat">1</property>
+            </column>
+            <column id="108">
+                <property name="repeat">1</property>
+            </column>
+            <column id="109">
+                <property name="repeat">1</property>
+            </column>
+            <column id="110">
+                <property name="repeat">1</property>
+            </column>
+            <column id="111">
+                <property name="repeat">1</property>
+            </column>
+            <column id="112">
+                <property name="repeat">1</property>
+            </column>
+            <column id="113">
+                <property name="repeat">1</property>
+            </column>
+            <column id="114"/>
+            <column id="115"/>
+            <column id="116"/>
+            <column id="117"/>
+            <column id="118"/>
+            <column id="119"/>
+            <column id="120"/>
+            <column id="121"/>
+            <column id="122"/>
+            <column id="123"/>
+            <column id="106">
+                <property name="repeat">1</property>
+            </column>
+            <header>
+                <row id="7">
+                    <property name="fontFamily">"Arial"</property>
+                    <property name="fontWeight">bold</property>
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="8">
+                        <label id="9">
+                            <text-property name="text">POLICYNUMBER</text-property>
+                        </label>
+                    </cell>
+                    <cell id="12">
+                        <label id="13">
+                            <text-property name="text">INSUREDLASTNAME</text-property>
+                        </label>
+                    </cell>
+                    <cell id="14">
+                        <label id="15">
+                            <text-property name="text">INSUREDFIRSTNAME</text-property>
+                        </label>
+                    </cell>
+                    <cell id="16">
+                        <label id="17">
+                            <text-property name="text">PAYEELASTNAME</text-property>
+                        </label>
+                    </cell>
+                    <cell id="18">
+                        <label id="19">
+                            <text-property name="text">PAYEEFIRSTNAME</text-property>
+                        </label>
+                    </cell>
+                    <cell id="20">
+                        <label id="21">
+                            <text-property name="text">CORPNAME</text-property>
+                        </label>
+                    </cell>
+                    <cell id="22">
+                        <label id="23">
+                            <text-property name="text">REGION</text-property>
+                        </label>
+                    </cell>
+                    <cell id="24">
+                        <label id="25">
+                            <text-property name="text">COMPANYCODE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="26">
+                        <label id="27">
+                            <text-property name="text">PAY STATUS</text-property>
+                        </label>
+                    </cell>
+                    <cell id="28">
+                        <label id="29">
+                            <text-property name="text">NETBENEFITPAYMENT</text-property>
+                        </label>
+                    </cell>
+                    <cell id="30">
+                        <label id="31">
+                            <text-property name="text">CHECKNUMBER</text-property>
+                        </label>
+                    </cell>
+                    <cell id="32">
+                        <label id="33">
+                            <text-property name="text">DATEPAID</text-property>
+                        </label>
+                    </cell>
+                    <cell id="34">
+                        <label id="35">
+                            <text-property name="text">PAY TYPE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="36">
+                        <label id="37">
+                            <text-property name="text">UPDATED_BY</text-property>
+                        </label>
+                    </cell>
+                    <cell id="38">
+                        <label id="39">
+                            <text-property name="text">UPDATED_WHEN</text-property>
+                        </label>
+                    </cell>
+                    <cell id="40">
+                        <label id="41">
+                            <text-property name="text">PAY SUBMIT DATE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="42">
+                        <label id="43">
+                            <text-property name="text">PAY SUBMIT USER</text-property>
+                        </label>
+                    </cell>
+                    <cell id="44">
+                        <label id="45">
+                            <text-property name="text">POL RPT STATUS</text-property>
+                        </label>
+                    </cell>
+                    <cell id="10">
+                        <label id="11">
+                            <text-property name="text">PAYMENTID</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="46">
+                    <property name="fontFamily">"Arial"</property>
+                    <property name="fontSize">8pt</property>
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="47">
+                        <data id="48">
+                            <property name="resultSetColumn">POLICYNUMBER</property>
+                        </data>
+                    </cell>
+                    <cell id="51">
+                        <data id="52">
+                            <property name="resultSetColumn">INSUREDLASTNAME</property>
+                        </data>
+                    </cell>
+                    <cell id="53">
+                        <data id="54">
+                            <property name="resultSetColumn">INSUREDFIRSTNAME</property>
+                        </data>
+                    </cell>
+                    <cell id="55">
+                        <data id="56">
+                            <property name="resultSetColumn">PAYEELASTNAME</property>
+                        </data>
+                    </cell>
+                    <cell id="57">
+                        <data id="58">
+                            <property name="resultSetColumn">PAYEEFIRSTNAME</property>
+                        </data>
+                    </cell>
+                    <cell id="59">
+                        <data id="60">
+                            <property name="resultSetColumn">CORPNAME</property>
+                        </data>
+                    </cell>
+                    <cell id="61">
+                        <data id="62">
+                            <property name="resultSetColumn">REGION</property>
+                        </data>
+                    </cell>
+                    <cell id="63">
+                        <data id="64">
+                            <property name="resultSetColumn">COMPANYCODE</property>
+                        </data>
+                    </cell>
+                    <cell id="65">
+                        <data id="66">
+                            <property name="resultSetColumn">PAY STATUS</property>
+                        </data>
+                    </cell>
+                    <cell id="67">
+                        <data id="68">
+                            <property name="resultSetColumn">NETBENEFITPAYMENT</property>
+                        </data>
+                    </cell>
+                    <cell id="69">
+                        <data id="70">
+                            <property name="resultSetColumn">CHECKNUMBER</property>
+                        </data>
+                    </cell>
+                    <cell id="71">
+                        <data id="72">
+                            <property name="resultSetColumn">DATEPAID</property>
+                        </data>
+                    </cell>
+                    <cell id="73">
+                        <data id="74">
+                            <property name="resultSetColumn">PAY TYPE</property>
+                        </data>
+                    </cell>
+                    <cell id="75">
+                        <data id="76">
+                            <property name="resultSetColumn">UPDATED_BY</property>
+                        </data>
+                    </cell>
+                    <cell id="77">
+                        <data id="78">
+                            <property name="resultSetColumn">UPDATED_WHEN</property>
+                        </data>
+                    </cell>
+                    <cell id="79">
+                        <data id="80">
+                            <property name="resultSetColumn">PAY SUBMIT DATE</property>
+                        </data>
+                    </cell>
+                    <cell id="81">
+                        <data id="82">
+                            <property name="resultSetColumn">PAY SUBMIT USER</property>
+                        </data>
+                    </cell>
+                    <cell id="83">
+                        <data id="84">
+                            <property name="resultSetColumn">POL RPT STATUS</property>
+                        </data>
+                    </cell>
+                    <cell id="49">
+                        <data id="50">
+                            <property name="resultSetColumn">PAYMENTID</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="85">
+                    <cell id="86"/>
+                    <cell id="88"/>
+                    <cell id="89"/>
+                    <cell id="90"/>
+                    <cell id="91"/>
+                    <cell id="92"/>
+                    <cell id="93"/>
+                    <cell id="94"/>
+                    <cell id="95"/>
+                    <cell id="96"/>
+                    <cell id="97"/>
+                    <cell id="98"/>
+                    <cell id="99"/>
+                    <cell id="100"/>
+                    <cell id="101"/>
+                    <cell id="102"/>
+                    <cell id="103"/>
+                    <cell id="104"/>
+                    <cell id="87"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+    <property name="pageVariables">
+        <variable-element name="allReportParaFaceVal">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="storedFileLocation">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="startTime">
+            <expression name="value" type="javascript">(new Date()).getTime()</expression>
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="session">
+            <expression name="value" type="javascript">"inactive"</expression>
+            <property name="type">report</property>
+        </variable-element>
+    </property>
+</report>

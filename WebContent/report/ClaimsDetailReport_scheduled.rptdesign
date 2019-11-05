@@ -1,0 +1,2176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="DBPARAM" id="495">
+            <property name="hidden">true</property>
+            <text-property name="helpText">DBPARAM</text-property>
+            <text-property name="promptText">ClientName</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ReportName" id="6656">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <method name="getDefaultValueList"><![CDATA[var reportName = reportContext.getReportRunnable().getReportName();
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));]]></method>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ClaimType" id="7">
+            <property name="hidden">true</property>
+            <text-property name="helpText">Claim Type</text-property>
+            <text-property name="promptText">Claim Type</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">0,1,2</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">0</property>
+                    <property name="label">Accelerated Death Claim</property>
+                </structure>
+                <structure>
+                    <property name="value">1</property>
+                    <property name="label">Death Claim</property>
+                </structure>
+                <structure>
+                    <property name="value">2</property>
+                    <property name="label">Waiver Claim</property>
+                </structure>
+                <structure>
+                    <property name="value">0,1,2</property>
+                    <property name="label">--ALL--</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="PolicySite" id="4372">
+            <property name="hidden">true</property>
+            <text-property name="helpText">Policy Site</text-property>
+            <text-property name="promptText">Policy Site</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="sortBy">label</property>
+            <property name="sortDirection">asc</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">103,7,92,90,91,10,80,11,102,9,12</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">103</property>
+                    <property name="label">EXTMKTS</property>
+                </structure>
+                <structure>
+                    <property name="value">7</property>
+                    <property name="label">WILTRE</property>
+                </structure>
+                <structure>
+                    <property name="value">92</property>
+                    <property name="label">WILTRPS</property>
+                </structure>
+                <structure>
+                    <property name="value">90</property>
+                    <property name="label">WRC</property>
+                </structure>
+                <structure>
+                    <property name="value">91</property>
+                    <property name="label">WRCNARPS</property>
+                </structure>
+                <structure>
+                    <property name="value">10</property>
+                    <property name="label">WRG</property>
+                </structure>
+                <structure>
+                    <property name="value">80</property>
+                    <property name="label">WRM</property>
+                </structure>
+                <structure>
+                    <property name="value">11</property>
+                    <property name="label">WRR</property>
+                </structure>
+                <structure>
+                    <property name="value">102</property>
+                    <property name="label">WRTRPS</property>
+                </structure>
+                <structure>
+                    <property name="value">9</property>
+                    <property name="label">WRW</property>
+                </structure>
+                <structure>
+                    <property name="value">103,7,92,90,91,10,80,11,102,9,12</property>
+                    <property name="label">--ALL--</property>
+                </structure>
+                <structure>
+                    <property name="value">12</property>
+                    <property name="label">WHU</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">false</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="StartDate" id="4370">
+            <property name="hidden">true</property>
+            <text-property name="helpText">Start Date</text-property>
+            <text-property name="promptText">Start Date (YYYY-MM-DD)</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">"null"</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="EndDate" id="4371">
+            <property name="hidden">true</property>
+            <text-property name="helpText">End Date (YYYY-MM-DD)</text-property>
+            <text-property name="promptText">End Date (YYYY-MM-DD)</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">"null"</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="SendEmail" id="6651">
+            <property name="hidden">true</property>
+            <text-property name="helpText">SendEmail</text-property>
+            <text-property name="promptText">SendEmail</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="Region" id="6654">
+            <property name="hidden">true</property>
+            <text-property name="helpText">Region</text-property>
+            <text-property name="promptText">Region</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">25</property>
+                    <property name="label">PLK1</property>
+                </structure>
+                <structure>
+                    <property name="value">26</property>
+                    <property name="label">PWR1</property>
+                </structure>
+                <structure>
+                    <property name="value">66</property>
+                    <property name="label">PCAL</property>
+                </structure>
+                <structure>
+                    <property name="value">79</property>
+                    <property name="label">RPSW</property>
+                </structure>
+                <structure>
+                    <property name="value">80</property>
+                    <property name="label">WRCB</property>
+                </structure>
+                <structure>
+                    <property name="value">25,26,66,79,80</property>
+                    <property name="label">--ALL--</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="CompanyCode" id="6653">
+            <property name="hidden">true</property>
+            <text-property name="helpText">Company Code</text-property>
+            <text-property name="promptText">Company Code</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="dataSetName">Company Code</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["CARRIERCODE"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["DESCR"]</expression>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">--ALL--</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ReportingStatus" id="4373">
+            <property name="hidden">true</property>
+            <text-property name="helpText">Reporting Status</text-property>
+            <text-property name="promptText">Reporting Status</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1,2,3,4,5</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">1,3</property>
+                    <property name="label">Open-All Open Statuses (Pending, PartialPaid)</property>
+                </structure>
+                <structure>
+                    <property name="value">2,4,5</property>
+                    <property name="label">Closed-All Closed Statuses (Paid, Denied, Rescinded)</property>
+                </structure>
+                <structure>
+                    <property name="value">2</property>
+                    <property name="label">Paid</property>
+                </structure>
+                <structure>
+                    <property name="value">3</property>
+                    <property name="label">Partial Paid</property>
+                </structure>
+                <structure>
+                    <property name="value">2,3</property>
+                    <property name="label">Paid-All Paid Statuses (PartialPaid, Paid)</property>
+                </structure>
+                <structure>
+                    <property name="value">1</property>
+                    <property name="label">Pending</property>
+                </structure>
+                <structure>
+                    <property name="value">4</property>
+                    <property name="label">Denied</property>
+                </structure>
+                <structure>
+                    <property name="value">5</property>
+                    <property name="label">Rescinded</property>
+                </structure>
+                <structure>
+                    <property name="value">1,2,3,4,5</property>
+                    <property name="label">--ALL--</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ClaimStatus" id="6898">
+            <property name="hidden">true</property>
+            <text-property name="helpText">claimstatus</text-property>
+            <text-property name="promptText">claimstatus</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">5</property>
+                    <property name="label">Closed</property>
+                </structure>
+                <structure>
+                    <property name="value">0</property>
+                    <property name="label">Notified</property>
+                </structure>
+                <structure>
+                    <property name="value">3</property>
+                    <property name="label">Pending</property>
+                </structure>
+                <structure>
+                    <property name="value">0,3,5</property>
+                    <property name="label">--ALL--</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="DocType" id="4383">
+            <property name="hidden">true</property>
+            <text-property name="helpText">docType</text-property>
+            <text-property name="promptText">DocType</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">xls</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">xls</property>
+                    <property name="label">xls</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="4">
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.birt );
+vars["startTime"]=(new Date()).getTime();
+rp=new SetDatabaseDetails();
+dbDetails=new Array();
+dbDetails=rp.dbDetailsReader(params["DBPARAM"].value);
+this.setExtensionProperty("odaURL",dbDetails[0]);
+this.setExtensionProperty("odaUser",dbDetails[1]);
+this.setExtensionProperty("odaPassword",dbDetails[2]);]]></method>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">com.ibm.db2.jcc.DB2Driver</property>
+            <property name="odaURL">jdbc:db2://20.15.86.32:50002/ACCELWRE</property>
+            <property name="odaUser">uniauser1</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">VW5pYVUkZXIx</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Data Set" id="6">
+            <property name="nullsOrdering">nulls lowest</property>
+            <list-property name="computedColumns">
+                <structure>
+                    <property name="name">Deceased Insured Last Name</property>
+                    <expression name="expression">if(row["CLIENT_TYPE_ID"] == 2){row["SEARCH_COMPANY_NAME"];}else{row["SEARCH_LAST_NAME"];}</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">CLIENT_TYPE_ID</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">CLIENT_TYPE_ID</text-property>
+                    <text-property name="heading">CLIENT_TYPE_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Company Code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Company Code</text-property>
+                    <text-property name="heading">Company Code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Key</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Key</text-property>
+                    <text-property name="heading">Key</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Policy Number</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Policy Number</text-property>
+                    <text-property name="heading">Policy Number</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Plan Code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Plan Code</text-property>
+                    <text-property name="heading">Plan Code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Claim Status</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">Claim Status</text-property>
+                    <text-property name="heading">Claim Status</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">POLCVRGCLAIMSTATUS</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">POLCVRGCLAIMSTATUS</text-property>
+                    <text-property name="heading">POLCVRGCLAIMSTATUS</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Death Notify Date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Death Notify Date</text-property>
+                    <text-property name="heading">Death Notify Date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Date Of Death</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Date Of Death</text-property>
+                    <text-property name="heading">Date Of Death</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Cause of Death Code</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">Cause of Death Code</text-property>
+                    <text-property name="heading">Cause of Death Code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Cause of Death Description</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Cause of Death Description</text-property>
+                    <text-property name="heading">Cause of Death Description</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Death Benefit Amount</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">Death Benefit Amount</text-property>
+                    <text-property name="heading">Death Benefit Amount</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">DECISIONREASON</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">DECISIONREASON</text-property>
+                    <text-property name="heading">DECISIONREASON</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">UNDERLEGALREVIEW</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">UNDERLEGALREVIEW</text-property>
+                    <text-property name="heading">UNDERLEGALREVIEW</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Deceased Insured First Name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Deceased Insured First Name</text-property>
+                    <text-property name="heading">Deceased Insured First Name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Deceased Insured Middle Name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Deceased Insured Middle Name</text-property>
+                    <text-property name="heading">Deceased Insured Middle Name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">SEARCH_COMPANY_NAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">SEARCH_COMPANY_NAME</text-property>
+                    <text-property name="heading">SEARCH_COMPANY_NAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">SEARCH_LAST_NAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">SEARCH_LAST_NAME</text-property>
+                    <text-property name="heading">SEARCH_LAST_NAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Insured Indicator</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Insured Indicator</text-property>
+                    <text-property name="heading">Insured Indicator</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">CLIENT_TYPE_ID</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">Company Code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">Key</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">Policy Number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">Plan Code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">Claim Status</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">POLCVRGCLAIMSTATUS</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">Death Notify Date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">Date Of Death</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">Cause of Death Code</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">Cause of Death Description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">Death Benefit Amount</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">DECISIONREASON</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">UNDERLEGALREVIEW</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">Deceased Insured First Name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">Deceased Insured Middle Name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">SEARCH_COMPANY_NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">SEARCH_LAST_NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">Insured Indicator</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">Deceased Insured Last Name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.validator);
+importPackage( Packages.com.dxc.reports.util);
+inputValidator=new InputValidator();
+
+this.queryText = this.queryText.replace("/**claimtype**/", "claim.CLAIMTYPE IN (" + params["ClaimType"].value + ")");
+this.queryText = this.queryText.replace("/**polsite**/", "claimpolicy.POLICY_SITE IN (" + params["PolicySite"].value + ")");
+this.queryText=this.queryText.replace("/**region**/", "LIFEPOLICY.BPO_REGIONID IN ("+params["Region"].value+")");
+this.queryText = this.queryText.replace("/**repstatus**/", "claimpolicy.REPORTING_STATUS IN (" + params["ReportingStatus"].value + ")");
+this.queryText = this.queryText.replace("/**claimstatus**/", "claim.CLAIMMGMTSTATUS IN (" + params["ClaimStatus"].value + ")");
+
+//Company Code
+if(params["CompanyCode"].value!="--ALL--")
+{
+this.queryText = this.queryText.replace("/**companycode**/", " AND LIFEPOLICY.CARRIERCODE IN (" + params["CompanyCode"].value + ")");
+}
+else
+{
+this.queryText = this.queryText.replace("/**companycode**/", "");
+}
+
+//Date
+if(inputValidator.dateValidator(params["StartDate"].value)==true &amp;&amp; inputValidator.dateValidator(params["EndDate"].value)==true &amp;&amp; inputValidator.dateCheck(params["StartDate"].value,params["EndDate"].value)==true)
+{
+this.queryText = this.queryText.replace("/**dates**/"," AND claim.NOTIFYENTRYDATE BETWEEN '" +params["StartDate"].value+ "' AND '" +params["EndDate"].value+"'");
+}
+else if(params["StartDate"].value=="null" &amp;&amp; params["EndDate"].value=="null")
+{
+this.queryText = this.queryText.replace("/**dates**/","");
+}
+else if(params["StartDate"].value=="null")
+{
+ this.queryText = this.queryText.replace("/**dates**/","AND claim.NOTIFYENTRYDATE BETWEEN '1900-01-01' AND '" +params["EndDate"].value+"'");
+}
+else if(params["EndDate"].value=="null")
+{
+ this.queryText = this.queryText.replace("/**dates**/","AND claim.NOTIFYENTRYDATE BETWEEN '"+params["StartDate"].value+ "' AND '"+Formatter.format(BirtDateTime.today(),"yyyy-MM-dd")+"'");
+}]]></method>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">CLIENT_TYPE_ID</property>
+                    <property name="nativeName">CLIENT_TYPE_ID</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">Company Code</property>
+                    <property name="nativeName">Company Code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">Key</property>
+                    <property name="nativeName">Key</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">Policy Number</property>
+                    <property name="nativeName">Policy Number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">Plan Code</property>
+                    <property name="nativeName">Plan Code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">Claim Status</property>
+                    <property name="nativeName">Claim Status</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">POLCVRGCLAIMSTATUS</property>
+                    <property name="nativeName">POLCVRGCLAIMSTATUS</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">Death Notify Date</property>
+                    <property name="nativeName">Death Notify Date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">Date Of Death</property>
+                    <property name="nativeName">Date Of Death</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">Cause of Death Code</property>
+                    <property name="nativeName">Cause of Death Code</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">Cause of Death Description</property>
+                    <property name="nativeName">Cause of Death Description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">Death Benefit Amount</property>
+                    <property name="nativeName">Death Benefit Amount</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">3</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">DECISIONREASON</property>
+                    <property name="nativeName">DECISIONREASON</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">UNDERLEGALREVIEW</property>
+                    <property name="nativeName">UNDERLEGALREVIEW</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">Deceased Insured First Name</property>
+                    <property name="nativeName">Deceased Insured First Name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">Deceased Insured Middle Name</property>
+                    <property name="nativeName">Deceased Insured Middle Name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">SEARCH_COMPANY_NAME</property>
+                    <property name="nativeName">SEARCH_COMPANY_NAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">SEARCH_LAST_NAME</property>
+                    <property name="nativeName">SEARCH_LAST_NAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">Insured Indicator</property>
+                    <property name="nativeName">Insured Indicator</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[
+SELECT
+	DISTINCT 
+	PARTY.CLIENT_TYPE_ID,
+	LEFT (COMPCODE.DESCR,2) AS "Company Code",
+	RIGHT(TRIM(claim.CLAIMNUMBER),10) AS "Key",
+	claimpolicy.POLICYNUMBER AS "Policy Number" ,
+	lifepolicy.PLANCODE AS "Plan Code",
+	claim.CLAIMSTATUS AS "Claim Status",
+	claimpolicy.POLCVRGCLAIMSTATUS,
+	claim.NOTIFYRCPTDATE AS "Death Notify Date",
+	claim.OCCURRENCEDATE AS "Date Of Death", 
+	COD.INTERNAL_VALUE AS "Cause of Death Code",
+	COD.DESCR AS "Cause of Death Description",
+	POLAM.NET AS "Death Benefit Amount",
+	claimpolicy.DECISIONREASON,
+	claim.UNDERLEGALREVIEW,
+	PARTY.SEARCH_FIRST_NAME AS "Deceased Insured First Name",
+	PARTY.BPO_SEARCH_MIDDLE_NAME AS "Deceased Insured Middle Name",
+	PARTY.SEARCH_COMPANY_NAME,	
+	PARTY.SEARCH_LAST_NAME,
+	INDICAT.DESCR AS "Insured Indicator"
+FROM
+	CLAIMS.CLAIMPOLICY AS claimpolicy
+INNER JOIN CLAIMS.CLAIM AS claim ON
+	claim.CLAIMID = claimpolicy.CLAIMID
+INNER JOIN CLIENT.PARTY PARTY ON
+	claim.INSUREDID = PARTY.CLIENT_ID
+INNER JOIN(
+		SELECT
+			VALHIS.CLAIMPOLICYID,
+			sum(valhis.INTERESTAMT)+SUM(valhis.NETAMOUNT) AS "NET"
+		FROM
+			CLAIMS.VALUATIONHISTORY VALHIS
+		WHERE
+			VALHIS.ENDDATE IS NULL
+			AND VALHIS.CLAIMPOLICYSTATUS != 11
+			AND VALHIS.CLAIMCOVERAGESTATUS != 11
+		GROUP BY
+			VALHIS.CLAIMPOLICYID
+	) AS POLAM ON POLAM.CLAIMPOLICYID=claimpolicy.CLAIMPOLICYID
+INNER JOIN CLAIMS.CLAIMCOVERAGE clmcov  ON clmcov.CLAIMPOLICYID
+= claimpolicy.CLAIMPOLICYID INNER JOIN
+
+POLICY.LIFEPOLICY AS lifepolicy ON
+	(lifepolicy.PLANCODE = clmcov.plancode AND lifepolicy.HOSTCONTRACTID=clmcov.HOSTCONTRACTID)
+INNER JOIN AV.CAUSEOFDEATH COD ON
+	COD.INTERNAL_VALUE = claim.CLAIMCAUSE
+INNER JOIN AV.CLAIMMANAGEMENTSTATUS CLMMGMSTS ON
+	claim.CLAIMMGMTSTATUS = CLMMGMSTS.INTERNAL_VALUE
+INNER JOIN AV.REGION REGION ON
+	LIFEPOLICY.BPO_REGIONID = REGION.INTERNAL_VALUE
+INNER JOIN AV.COMPANYCODE COMPCODE ON
+	LIFEPOLICY.CARRIERCODE = CAST(COMPCODE.INTERNAL_VALUE AS CHAR(10))
+INNER JOIN AV.INSUREDINDICATOR INDICAT ON
+    CLAIM.INSURED_INDICATOR=INDICAT.INTERNAL_VALUE
+WHERE clmcov.coveragetype='01' AND /**claimtype**/ AND /**polsite**/ /**companycode**/ 
+	/**dates**/ AND /**region**/ AND /**repstatus**/ AND /**claimstatus**/ ]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DATE_REPORTED</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>DATE_REPORTED</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DATE_REPORTED</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>BENEFITAMOUNT</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>3</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>4</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>BENEFITAMOUNT</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>BENEFITAMOUNT</design:label>
+            <design:formattingHints>
+              <design:displaySize>21</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PLANCODE</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>32</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PLANCODE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PLANCODE</design:label>
+            <design:formattingHints>
+              <design:displaySize>32</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>POLICYNUMBER</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>POLICYNUMBER</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>POLICYNUMBER</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PROCESSING_SITE</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PROCESSING_SITE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PROCESSING_SITE</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REGION</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>REGION</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REGION</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>COMPANY</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>COMPANY</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>COMPANY</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NOTIFYDATE</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>NOTIFYDATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NOTIFYDATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OCCURRENCEDATE</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>OCCURRENCEDATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OCCURRENCEDATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLAIMID</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CLAIMID</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLAIMID</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLAIMNUMBER</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CLAIMNUMBER</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLAIMNUMBER</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLAIMSTATUS</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CLAIMSTATUS</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLAIMSTATUS</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>POLICYSTATUS</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>POLICYSTATUS</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>POLICYSTATUS</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>INSUREDID</design:name>
+              <design:position>14</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>INSUREDID</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>INSUREDID</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PROOFLOSSDATE</design:name>
+              <design:position>15</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PROOFLOSSDATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PROOFLOSSDATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PROOFDEATHDATE</design:name>
+              <design:position>16</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PROOFDEATHDATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PROOFDEATHDATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NOTIFYENTRYDATE</design:name>
+              <design:position>17</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>NOTIFYENTRYDATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NOTIFYENTRYDATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLAIM_CLOSE_DATE</design:name>
+              <design:position>18</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CLAIM_CLOSE_DATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLAIM_CLOSE_DATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OCCURRENCEDATE</design:name>
+              <design:position>19</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>OCCURRENCEDATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OCCURRENCEDATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>POLCVRGCLAIMSTATUS</design:name>
+              <design:position>20</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>POLCVRGCLAIMSTATUS</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>POLCVRGCLAIMSTATUS</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLAIMTYPE</design:name>
+              <design:position>21</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CLAIMTYPE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLAIMTYPE</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CAUSEOFDEATH</design:name>
+              <design:position>22</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CAUSEOFDEATH</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CAUSEOFDEATH</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLAIMSTAUS</design:name>
+              <design:position>23</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CLAIMSTAUS</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLAIMSTAUS</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Company Code" id="6652">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">CARRIERCODE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CARRIERCODE</text-property>
+                    <text-property name="heading">CARRIERCODE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">DESCR</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">DESCR</text-property>
+                    <text-property name="heading">DESCR</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">CARRIERCODE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">DESCR</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">CARRIERCODE</property>
+                    <property name="nativeName">CARRIERCODE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">DESCR</property>
+                    <property name="nativeName">DESCR</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT
+	DISTINCT 
+	LIFEPOLICY.CARRIERCODE,
+	COMPCODE.DESCR
+FROM
+	POLICY.LIFEPOLICY AS lifepolicy 
+LEFT OUTER JOIN AV.COMPANYCODE COMPCODE ON
+	LIFEPOLICY.CARRIERCODE = CAST(COMPCODE.INTERNAL_VALUE AS CHAR(10))]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>INTERNAL_VALUE</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>INTERNAL_VALUE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>INTERNAL_VALUE</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DESCR</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>DESCR</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DESCR</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="LeadingTrailingWhiteSpace" id="7203">
+            <structure name="stringFormat">
+                <property name="category">Custom</property>
+                <property name="pattern">^</property>
+            </structure>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">custom</property>
+            <property name="height">25in</property>
+            <property name="width">20in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="6899">
+            <property name="dataSet">Data Set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Company Code</property>
+                    <text-property name="displayName">Company Code</text-property>
+                    <expression name="expression" type="javascript">var print=dataSetRow["Company Code"]+"";&#13;
+if(print=="null")&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if(print.length!=2)&#13;
+{&#13;
+ for(var i=print.length;i&lt;2;i++)&#13;
+ {&#13;
+  print=print+' ';&#13;
+ }&#13;
+}&#13;
+&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Key</property>
+                    <text-property name="displayName">Key</text-property>
+                    <expression name="expression" type="javascript">var print=dataSetRow["Key"]+"";&#13;
+if(print=="null")&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if(print.length!=10)&#13;
+{&#13;
+ for(var i=print.length;i&lt;10;i++)&#13;
+ {&#13;
+  print=print+' ';&#13;
+ }&#13;
+}&#13;
+&#13;
+if(print.length>10)&#13;
+print=print.substring(0,9);&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Policy Number</property>
+                    <text-property name="displayName">Policy Number</text-property>
+                    <expression name="expression" type="javascript">var print=dataSetRow["Policy Number"]+"";&#13;
+if(print=="null")&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if(print.length!=11)&#13;
+{&#13;
+ for(var i=print.length;i&lt;11;i++)&#13;
+ {&#13;
+  print=print+' ';&#13;
+ }&#13;
+}&#13;
+if(print.length>11)&#13;
+print=print.substring(0,10);&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Plan Code</property>
+                    <text-property name="displayName">Plan Code</text-property>
+                    <expression name="expression" type="javascript">var print=dataSetRow["Plan Code"]+"";&#13;
+if(print=="null")&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if(print.length!=8)&#13;
+{&#13;
+ for(var i=print.length;i&lt;8;i++)&#13;
+ {&#13;
+  print=print+' ';&#13;
+ }&#13;
+}&#13;
+&#13;
+if(print.length>8)&#13;
+print=print.substring(0,7);&#13;
+&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">CLAIMSTATUS</property>
+                    <text-property name="displayName">Claim Status</text-property>
+                    <expression name="expression" type="javascript">" ";&#13;
+if(dataSetRow["Claim Status"]==0 || dataSetRow["POLCVRGCLAIMSTATUS"]==0)&#13;
+"A";&#13;
+if(dataSetRow["POLCVRGCLAIMSTATUS"]==13)&#13;
+"D";&#13;
+if(dataSetRow["POLCVRGCLAIMSTATUS"]==15)&#13;
+"F";&#13;
+if(dataSetRow["UNDERLEGALREVIEW"]==1 &amp;&amp; (dataSetRow["Claim Status"]==0 || dataSetRow["POLCVRGCLAIMSTATUS"]==0))&#13;
+"L";&#13;
+if(dataSetRow["POLCVRGCLAIMSTATUS"]==5)&#13;
+"P";&#13;
+if(dataSetRow["Claim Status"]==6)&#13;
+"X";&#13;
+if(params["ReportingStatus"].value==4)&#13;
+"Z";&#13;
+if((dataSetRow["POLCVRGCLAIMSTATUS"]==5) &amp;&amp; (dataSetRow["DECISIONREASON"]==12 || dataSetRow["DECISIONREASON"]==13)) &#13;
+"S";</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">POLCVRGCLAIMSTATUS</property>
+                    <text-property name="displayName">POLCVRGCLAIMSTATUS</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["POLCVRGCLAIMSTATUS"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">DEATHNOTIFYDATE</property>
+                    <text-property name="displayName">Death Notify Date</text-property>
+                    <expression name="expression" type="javascript">"          ";&#13;
+if(dataSetRow["Death Notify Date"])&#13;
+{df = new java.text.SimpleDateFormat("MM/dd/yyyy");&#13;
+df.format(dataSetRow["Death Notify Date"]);&#13;
+}</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">DATEOFDEATH</property>
+                    <text-property name="displayName">Date Of Death</text-property>
+                    <expression name="expression" type="javascript">"          ";&#13;
+if(dataSetRow["Date Of Death"])&#13;
+{df = new java.text.SimpleDateFormat("MM/dd/yyyy");&#13;
+df.format(dataSetRow["Date Of Death"]);&#13;
+}</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Cause of Death Code</property>
+                    <text-property name="displayName">Cause of Death Code</text-property>
+                    <expression name="expression" type="javascript">var print=dataSetRow["Cause of Death Code"]+"";&#13;
+if(print=='2147483647')&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if(print=="null")&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if(print.length!=2)&#13;
+{&#13;
+ for(var i=print.length;i&lt;2;i++)&#13;
+ {&#13;
+  print='0'+print;&#13;
+ }&#13;
+}&#13;
+&#13;
+if(print.length>2)&#13;
+print=print.substring(0,1);&#13;
+&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Cause of Death Description</property>
+                    <text-property name="displayName">Cause of Death Description</text-property>
+                    <expression name="expression" type="javascript">var print=dataSetRow["Cause of Death Description"]+"";&#13;
+if(print=="null")&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if(print.length!=50)&#13;
+{&#13;
+ for(var i=print.length;i&lt;50;i++)&#13;
+ {&#13;
+  print=print+' ';&#13;
+ }&#13;
+}&#13;
+&#13;
+if(print.length>50)&#13;
+print=print.substring(0,49);&#13;
+&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Death Benefit Amount</property>
+                    <text-property name="displayName">Death Benefit Amount</text-property>
+                    <expression name="expression" type="javascript">print="00000000.00";&#13;
+if(dataSetRow["Death Benefit Amount"])&#13;
+{&#13;
+ var print=Formatter.format(dataSetRow["Death Benefit Amount"],"########0.00");&#13;
+ if(print.length!=11)&#13;
+{&#13;
+ for(var i=print.length;i&lt;11;i++)&#13;
+ {&#13;
+  print='0'+print;&#13;
+ }&#13;
+}&#13;
+&#13;
+print;&#13;
+}</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">Joint Death ben Amt</text-property>
+                    <expression name="expression" type="javascript">"00000000.00";</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Joint Death Reported</property>
+                    <text-property name="displayName">Joint Death Reported</text-property>
+                    <expression name="expression" type="javascript">var print='';&#13;
+for(var i=print.length;i&lt;10;i++)&#13;
+{&#13;
+ print=' '+print;&#13;
+}&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Joint Date of Death</property>
+                    <text-property name="displayName">Joint Date of Death</text-property>
+                    <expression name="expression" type="javascript">var print='';&#13;
+for(var i=print.length;i&lt;10;i++)&#13;
+{&#13;
+ print=' '+print;&#13;
+}&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Joint Cause of Death</property>
+                    <text-property name="displayName">Joint Cause of Death</text-property>
+                    <expression name="expression" type="javascript">var print='';&#13;
+for(var i=print.length;i&lt;2;i++)&#13;
+{&#13;
+ print=' '+print;&#13;
+}&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Joint Death Desc</property>
+                    <text-property name="displayName">Joint Death Desc</text-property>
+                    <expression name="expression" type="javascript">var print='';&#13;
+for(var i=print.length;i&lt;50;i++)&#13;
+{&#13;
+ print=' '+print;&#13;
+}&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Deceased Insured Last Name</property>
+                    <text-property name="displayName">Deceased Insured Last Name</text-property>
+                    <expression name="expression" type="javascript">var print=BirtStr.trim(dataSetRow["Deceased Insured Last Name"])+"";&#13;
+if(print=="null")&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if( print.length!=19)&#13;
+{&#13;
+ for(var i=print.length;i&lt;19;i++)&#13;
+ {&#13;
+  print=print+' ';&#13;
+ }&#13;
+}&#13;
+&#13;
+if(print.length>19)&#13;
+print=print.substring(0,18);&#13;
+&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Deceased Insured First Name</property>
+                    <text-property name="displayName">Deceased Insured First Name</text-property>
+                    <expression name="expression" type="javascript">var print=BirtStr.trim(dataSetRow["Deceased Insured First Name"])+"";&#13;
+if(print=="null")&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if(print.length!=19)&#13;
+{&#13;
+ for(var i=print.length;i&lt;19;i++)&#13;
+ {&#13;
+  print=print+' ';&#13;
+ }&#13;
+}&#13;
+&#13;
+if(print.length>19)&#13;
+print=print.substring(0,18);&#13;
+&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Deceased Insured Middle Name</property>
+                    <text-property name="displayName">Deceased Insured Middle Name</text-property>
+                    <expression name="expression" type="javascript">var print=BirtStr.trim(dataSetRow["Deceased Insured Middle Name"])+"";&#13;
+if(print=="null")&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if(print.length!=19)&#13;
+{&#13;
+ for(var i=print.length;i&lt;19;i++)&#13;
+ {&#13;
+  print=print+' ';&#13;
+ }&#13;
+}&#13;
+if(print.length>19)&#13;
+print=print.substring(0,18);&#13;
+&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Insured Indicator</property>
+                    <text-property name="displayName">Insured Indicator</text-property>
+                    <expression name="expression" type="javascript">var print=BirtStr.trim(dataSetRow["Insured Indicator"])+"";&#13;
+if(print=="null")&#13;
+{&#13;
+ print="";&#13;
+}&#13;
+if(print.length!=19)&#13;
+{&#13;
+ for(var i=print.length;i&lt;19;i++)&#13;
+ {&#13;
+  print=print+' ';&#13;
+ }&#13;
+}&#13;
+if(print.length>19)&#13;
+print=print.substring(0,18);&#13;
+&#13;
+print;</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding_1</property>
+                    <expression name="expression" type="javascript">BirtStr.concat("TOTAL CLAIM COUNT:",Total.countDistinct(dataSetRow["Company Code"]))</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding_2</property>
+                    <expression name="expression" type="javascript">Total.countDistinct(dataSetRow["Company Code"])</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="6958"/>
+            <column id="6959"/>
+            <column id="6960"/>
+            <column id="6961"/>
+            <column id="6962"/>
+            <column id="6964"/>
+            <column id="6965"/>
+            <column id="6966"/>
+            <column id="6967"/>
+            <column id="6968"/>
+            <column id="6972"/>
+            <column id="6976"/>
+            <column id="6995"/>
+            <column id="6984"/>
+            <column id="6980"/>
+            <column id="7004"/>
+            <column id="7008"/>
+            <column id="7012"/>
+            <column id="7016"/>
+            <header>
+                <row id="6900">
+                    <property name="style">LeadingTrailingWhiteSpace</property>
+                    <property name="textAlign">left</property>
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="6901">
+                        <label id="6902">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">CC</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6903">
+                        <label id="6904">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">Key       </text-property>
+                        </label>
+                    </cell>
+                    <cell id="6905">
+                        <label id="6906">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">Policy Nmbr</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6907">
+                        <label id="6908">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">PlanCode</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6909">
+                        <label id="6910">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">S</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6913">
+                        <label id="6914">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">NOTIFYDATE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6915">
+                        <label id="6916">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">DEATH DATE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6917">
+                        <label id="6918">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">DC</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6919">
+                        <label id="6920">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">Cause of Death Description                        </text-property>
+                        </label>
+                    </cell>
+                    <cell id="6921">
+                        <label id="6922">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">DeBenAmount</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6969">
+                        <label id="6986">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">JointDeRep</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6973">
+                        <label id="6997">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">JDeathDate</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6992">
+                        <label id="6998">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">JD</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6981">
+                        <label id="6999">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">Joint Death Desc                                  </text-property>
+                        </label>
+                    </cell>
+                    <cell id="6977">
+                        <label id="7000">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">JDeathbenAm</text-property>
+                        </label>
+                    </cell>
+                    <cell id="7001">
+                        <label id="7017">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">DeceasedInsuredLNam</text-property>
+                        </label>
+                    </cell>
+                    <cell id="7005">
+                        <label id="7019">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">DeceasedInsuredFNam</text-property>
+                        </label>
+                    </cell>
+                    <cell id="7009">
+                        <label id="7021">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">DeceasedInsuredMNam</text-property>
+                        </label>
+                    </cell>
+                    <cell id="7013">
+                        <label id="7023">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <text-property name="text">DeceasedInsuredIndi</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="6923">
+                    <property name="style">LeadingTrailingWhiteSpace</property>
+                    <property name="textAlign">left</property>
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="6924">
+                        <data id="6925">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Company Code</property>
+                        </data>
+                    </cell>
+                    <cell id="6926">
+                        <data id="6927">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Key</property>
+                        </data>
+                    </cell>
+                    <cell id="6928">
+                        <data id="6929">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Policy Number</property>
+                        </data>
+                    </cell>
+                    <cell id="6930">
+                        <data id="6931">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Plan Code</property>
+                        </data>
+                    </cell>
+                    <cell id="6932">
+                        <data id="6933">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">CLAIMSTATUS</property>
+                        </data>
+                    </cell>
+                    <cell id="6936">
+                        <data id="6937">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">DEATHNOTIFYDATE</property>
+                        </data>
+                    </cell>
+                    <cell id="6938">
+                        <data id="6939">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">DATEOFDEATH</property>
+                        </data>
+                    </cell>
+                    <cell id="6940">
+                        <data id="6941">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Cause of Death Code</property>
+                        </data>
+                    </cell>
+                    <cell id="6942">
+                        <data id="6943">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Cause of Death Description</property>
+                        </data>
+                    </cell>
+                    <cell id="6944">
+                        <data id="6945">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Death Benefit Amount</property>
+                        </data>
+                    </cell>
+                    <cell id="6970">
+                        <data id="6988">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Joint Death Reported</property>
+                        </data>
+                    </cell>
+                    <cell id="6974">
+                        <data id="6989">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Joint Date of Death</property>
+                        </data>
+                    </cell>
+                    <cell id="6993">
+                        <data id="6996">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Joint Cause of Death</property>
+                        </data>
+                    </cell>
+                    <cell id="6982">
+                        <data id="6990">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Joint Death Desc</property>
+                        </data>
+                    </cell>
+                    <cell id="6978">
+                        <data id="6991">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Column Binding</property>
+                        </data>
+                    </cell>
+                    <cell id="7002">
+                        <data id="7018">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Deceased Insured Last Name</property>
+                        </data>
+                    </cell>
+                    <cell id="7006">
+                        <data id="7020">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Deceased Insured First Name</property>
+                        </data>
+                    </cell>
+                    <cell id="7010">
+                        <data id="7022">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Deceased Insured Middle Name</property>
+                        </data>
+                    </cell>
+                    <cell id="7014">
+                        <data id="7024">
+                            <property name="style">LeadingTrailingWhiteSpace</property>
+                            <property name="resultSetColumn">Insured Indicator</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="6946">
+                    <cell id="6947"/>
+                    <cell id="6948"/>
+                    <cell id="6949"/>
+                    <cell id="6950"/>
+                    <cell id="6951"/>
+                    <cell id="6953"/>
+                    <cell id="6954"/>
+                    <cell id="6955"/>
+                    <cell id="6956"/>
+                    <cell id="6957"/>
+                    <cell id="6971"/>
+                    <cell id="6975"/>
+                    <cell id="6994"/>
+                    <cell id="6983"/>
+                    <cell id="6979"/>
+                    <cell id="7003"/>
+                    <cell id="7007"/>
+                    <cell id="7011"/>
+                    <cell id="7015"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+    <property name="pageVariables">
+        <variable-element name="allReportParaFaceVal">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="storedFileLocation">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="startTime">
+            <expression name="value" type="javascript">(new Date()).getTime()</expression>
+            <property name="type">report</property>
+        </variable-element>
+    </property>
+</report>

@@ -1,0 +1,17 @@
+/AIG_parameters.properties
+/ATH_parameters.properties
+/BHFDEV1_parameters.properties
+/PRU_parameters.properties
+/WRE_parameters.properties
+/com/
+/config.properties
+/cronexpression.properties
+/dbdetails.properties
+/dropdown.properties
+/email.properties
+/historydbdetails.properties
+/ldap.properties
+/logback.xml
+/messages.properties
+/parameters_backup.properties
+/propLocation.properties

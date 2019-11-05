@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <property name="units">in</property>
+    <method name="afterRender"><![CDATA[importPackage( Packages.com.dxc.reports.birt);
+importPackage( Packages.com.dxc.reports.validator);
+inputValidator=new InputValidator();
+if(FileAccess.fileCreated==0 )
+{
+
+FileAccess.fileCreated=1;
+fa=new FileAccess();
+var reportName = reportContext.getReportRunnable().getReportName();
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));
+vars["storedFileLocation"]=fa.sendFile('--ALL--:--ALL--:--ALL--:--ALL--:--ALL--',params["DBPARAM"].value,reportName,"No_Input","No_Input","No_Input",params["DocType"].value,"No_Input","No_Input",params["SendEmail"].value);
+if(History.historyCreated==0){
+history = new History();
+  //HistoryJson.createJsonforMongo(vars["storedFileLocation"],params["login"].value,vars["allReportParaFaceVal"],params["DBPARAM"].value,reportName,params["DocType"].value,params["SendEmail"].value);
+  //History.historyCreated=1;
+  /*HistoryJson.saveFileInMongoDB() ForTesting Creating Method*/
+  history.setHistory("Success",params["login"].value,"No Input Parameters",(new Date()).getTime(),vars["startTime"],reportName,params["DBPARAM"].value,vars["storedFileLocation"],params["SendEmail"].value,params["DocType"].value);
+  History.historyCreated=1;
+
+}
+}
+
+
+
+]]></method>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="DBPARAM" id="495">
+            <property name="hidden">true</property>
+            <text-property name="helpText">DBPARAM</text-property>
+            <text-property name="promptText">ClientName</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ReportName" id="6656">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <method name="getDefaultValueList"><![CDATA[var reportName = reportContext.getReportRunnable().getReportName();
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));]]></method>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="SendEmail" id="6651">
+            <property name="hidden">true</property>
+            <text-property name="helpText">SendEmail</text-property>
+            <text-property name="promptText">SendEmail</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="DocType" id="4383">
+            <property name="hidden">true</property>
+            <text-property name="helpText">docType</text-property>
+            <text-property name="promptText">DocType</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">xls</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">xls</property>
+                    <property name="label">xls</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="BPS" id="4">
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.birt );
+rp=new SetDatabaseDetails();
+dbDetails=new Array();
+dbDetails=rp.dbDetailsReader(params["DBPARAM"].value);
+this.setExtensionProperty("odaURL",dbDetails[0]);
+this.setExtensionProperty("odaUser",dbDetails[1]);
+this.setExtensionProperty("odaPassword",dbDetails[2]);
+vars["startTime"]=(new Date()).getTime();]]></method>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">com.ibm.db2.jcc.DB2Driver</property>
+            <property name="odaURL">jdbc:db2://20.15.86.32:50002/ACCELPRU</property>
+            <property name="odaUser">uniauser1</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">VW5pYVUkZXIx</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ALL_VALUES" id="6657">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">SITE</property>
+                    <text-property name="displayName">SITE</text-property>
+                    <text-property name="heading">SITE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIM#</property>
+                    <text-property name="displayName">CLAIM#</text-property>
+                    <text-property name="heading">CLAIM#</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">EXAMINER</property>
+                    <text-property name="displayName">EXAMINER</text-property>
+                    <text-property name="heading">EXAMINER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">NOTIFIED DATE</property>
+                    <text-property name="displayName">NOTIFIED DATE</text-property>
+                    <text-property name="heading">NOTIFIED DATE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIM STATUS</property>
+                    <text-property name="displayName">CLAIM STATUS</text-property>
+                    <text-property name="heading">CLAIM STATUS</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">SITE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">CLAIM#</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">EXAMINER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">NOTIFIED DATE</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">CLAIM STATUS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.birt);
+FileAccess.fileCreated=0;
+History.historyCreated=0;
+]]></method>
+            <property name="dataSource">BPS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">SITE</property>
+                    <property name="nativeName">SITE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">CLAIM#</property>
+                    <property name="nativeName">CLAIM#</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">EXAMINER</property>
+                    <property name="nativeName">EXAMINER</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">NOTIFIED DATE</property>
+                    <property name="nativeName">NOTIFIED DATE</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">CLAIM STATUS</property>
+                    <property name="nativeName">CLAIM STATUS</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT PROCESSINGSITES.DESCR AS SITE, CLAIM.CLAIMNUMBER AS "CLAIM#", CLAIM.EXAMINER, CLAIM.NOTIFYRCPTDATE AS "NOTIFIED DATE", CLAIMMANAGEMENTSTATUS.DESCR AS "CLAIM STATUS" 
+FROM (CLAIMS.CLAIM AS CLAIM 
+LEFT OUTER JOIN AV.PROCESSINGSITES AS PROCESSINGSITES ON CLAIM.PROCESSING_SITE=PROCESSINGSITES.INTERNAL_VALUE) 
+LEFT OUTER JOIN AV.CLAIMMANAGEMENTSTATUS AS CLAIMMANAGEMENTSTATUS ON CLAIM.CLAIMMGMTSTATUS=CLAIMMANAGEMENTSTATUS.INTERNAL_VALUE
+WHERE CLAIM.CLAIMMGMTSTATUS IN (0,3)
+AND NOT EXISTS
+(SELECT 1 FROM CLAIMS.CLAIMPOLICY AS CLAIMPOLICY  WHERE CLAIM.CLAIMID=CLAIMPOLICY.CLAIMID)]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SITE</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>SITE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SITE</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLAIM#</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CLAIM#</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLAIM#</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>EXAMINER</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>50</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>EXAMINER</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>EXAMINER</design:label>
+            <design:formattingHints>
+              <design:displaySize>50</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NOTIFIED DATE</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>NOTIFIED DATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NOTIFIED DATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLAIM STATUS</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CLAIM STATUS</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLAIM STATUS</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">custom</property>
+            <property name="height">11in</property>
+            <property name="width">7.5in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="6658">
+            <property name="dataSet">ALL_VALUES</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">SITE</property>
+                    <text-property name="displayName">SITE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["SITE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">CLAIM#</property>
+                    <text-property name="displayName">CLAIM#</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CLAIM#"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">EXAMINER</property>
+                    <text-property name="displayName">EXAMINER</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["EXAMINER"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">NOTIFIED DATE</property>
+                    <text-property name="displayName">NOTIFIED DATE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["NOTIFIED DATE"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">CLAIM STATUS</property>
+                    <text-property name="displayName">CLAIM STATUS</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CLAIM STATUS"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="6687"/>
+            <column id="6688"/>
+            <column id="6689"/>
+            <column id="6690"/>
+            <column id="6691"/>
+            <header>
+                <row id="6659">
+                    <property name="fontWeight">bold</property>
+                    <property name="textAlign">left</property>
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="6660">
+                        <label id="6661">
+                            <text-property name="text">SITE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6662">
+                        <label id="6663">
+                            <text-property name="text">CLAIM#</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6664">
+                        <label id="6665">
+                            <text-property name="text">EXAMINER</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6666">
+                        <label id="6667">
+                            <text-property name="text">NOTIFIED DATE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6668">
+                        <label id="6669">
+                            <text-property name="text">CLAIM STATUS</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="6670">
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="6671">
+                        <data id="6672">
+                            <property name="resultSetColumn">SITE</property>
+                        </data>
+                    </cell>
+                    <cell id="6673">
+                        <data id="6674">
+                            <property name="resultSetColumn">CLAIM#</property>
+                        </data>
+                    </cell>
+                    <cell id="6675">
+                        <data id="6676">
+                            <property name="resultSetColumn">EXAMINER</property>
+                        </data>
+                    </cell>
+                    <cell id="6677">
+                        <data id="6678">
+                            <property name="resultSetColumn">NOTIFIED DATE</property>
+                        </data>
+                    </cell>
+                    <cell id="6679">
+                        <data id="6680">
+                            <property name="resultSetColumn">CLAIM STATUS</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="6681">
+                    <cell id="6682"/>
+                    <cell id="6683"/>
+                    <cell id="6684"/>
+                    <cell id="6685"/>
+                    <cell id="6686"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+    <property name="pageVariables">
+        <variable-element name="startTime">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="storedFileLocation">
+            <property name="type">report</property>
+        </variable-element>
+    </property>
+</report>

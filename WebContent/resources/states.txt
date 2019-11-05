@@ -1,0 +1,474 @@
+"INTERNAL_VALUE","DESCR"
+-1,
+1,AL
+2,AK
+3,American Samoa
+4,AZ
+5,AR
+6,CA
+7,CO
+8,CT
+9,DE
+10,DC
+11,Federated States of Micronesia
+12,FL
+13,GA
+14,Guam
+15,HI
+16,ID
+17,IL
+18,IN
+19,IA
+20,KS
+21,KY
+22,LA
+23,ME
+24,Marshall Islands
+25,MD
+26,MA
+27,MI
+28,MN
+29,MS
+30,MO
+31,MT
+32,NE
+33,NV
+34,NH
+35,NJ
+36,NM
+37,NY
+38,NC
+39,ND
+40,Northern Mariana Islands
+41,OH
+42,OK
+43,OR
+44,Palau
+45,PA
+46,Puerto Rico
+47,RI
+48,SC
+49,SD
+50,TN
+51,TX
+52,UT
+53,VT
+54,Virgin Islands
+55,VA
+56,WA
+57,WV
+58,WI
+59,WY
+60,Armed Forces America
+61,"Armed Forces Canada, Africa, Europe, Middle East"
+62,PR
+63,Foreign Country
+80,Guantanamo Bay
+81,China
+82,Mexico
+83,LM
+84,"Curacao, NWI"
+85,Europe
+86,TA
+87,Other Foreign
+88,Africa
+89,Asia
+90,Canal Zone
+91,Central America
+92,Government Reservations
+93,Dominion of Canada
+94,South America
+95,AE
+96,South Sea Islands
+97,West Indies
+98,Columbia
+99,Other Foreign
+100,Other
+101,Foreign Country
+102,Foreign Country
+103,Argentina
+104,Scotland
+105,Madeira Island
+106,US Minor Islands
+108,Ontario
+110,Quebec
+900,AF
+901,Alberta
+902,Armed Forces America
+903,Armed Forces Pacific
+904,Armed Forces Pacific
+905,Belize
+906,British Col
+907,Canada
+908,Cuba (also Curacao)
+909,Czech Republic
+910,US Govt (other than military)
+911,FC
+912,Lebanon
+913,Madagascar
+914,Manitoba
+915,Mexico
+916,New Brunswck
+917,Newfoundland
+918,NW Terr
+919,Norway
+920,Nova Scotia
+921,Peru
+922,Phillippines
+923,Slovak Republic
+924,Unknown
+925,Venezuela
+926,Yukon Terr
+927,Australia
+928,Nova Scotia
+929,France
+930,GE
+931,Commonwealth of Australia
+932,Republic of Cameroon
+933,TT
+934,AE
+935,"APO,FPO"
+936,HO
+937,Yukon Terr
+938,Venezuela
+939,IT
+940,HI
+941,PH
+942,Quebec
+943,SA
+944,Slovak Republic
+945,Lebanon
+946,Belize
+947,UK
+948,AK
+949,FC
+950,HI
+951,AP
+952,CB
+953,CN
+954,CR
+957,HK
+958,KE
+959,NI
+960,OT
+962,PI
+963,SL
+964,SW
+965,UN
+966,WK
+967,WZ
+968,XC
+969,XW
+970,ZA
+971,FI
+972,"60"
+973,"62"
+974,N
+975,S
+976,RO
+977,"58"
+978,Prince Edwrd
+979,QB
+980,PR
+981,"64"
+982,WI
+983,FL
+984,UT
+985,Unknown
+986,
+987,Armed Services
+988,AL
+989,AR
+990,AS
+991,AZ
+992,CA
+993,CO
+994,CT
+995,DC
+996,DE
+997,FC
+998,GA
+999,HI
+1000,IA
+1001,ID
+1002,IL
+1003,IN
+1004,KS
+1005,KY
+1006,LA
+1007,MA
+1008,MD
+1009,ME
+1010,MI
+1011,MD
+1012,MO
+1013,MS
+1014,MT
+1015,NC
+1016,ND
+1017,NE
+1018,NH
+1019,NM
+1020,NV
+1021,OH
+1022,OK
+1023,OR
+1024,PA
+1025,PR
+1026,RI
+1027,SC
+1028,SD
+1029,TN
+1030,VA
+1031,VT
+1032,WA
+1033,WI
+1034,WV
+1035,WY
+1036,Armed Forces
+1037,"Armed Forces, England"
+1038,Armed Forces
+1039,TX
+1040,FL
+1041,NJ
+1042,MN
+1043,NY
+1044,Unknown
+1045,TS
+1046,TZ
+1047,YX
+1048,NB
+1049,MX
+1050,NA
+1051,**
+1052,..
+1053,Armed Forces Europe
+1054,NT
+1055,MY
+1056,YI
+1057,AN
+1058,I3
+1059,LI
+1060,U1
+1061,YK
+1062,"6I"
+1063,Unknown
+1064,"0H"
+1065,AA
+1066,Foreign Country
+1067,NG
+1068,OVR
+1072,Antigua Barbuda
+1073,Afghanistan
+1074,Algeria
+1075,Andorra
+1076,Angola
+1077,Germany
+1078,Bahamas
+1079,Jamaica
+1080,British West Indies
+1081,Dominican Republic
+1082,Burma
+1083,Bermuda
+1084,Egypt
+1085,Yugoslavia
+1086,Zaire
+1087,American Samoa
+1088,Austria
+1089,Antarctica
+1090,Bahrain
+1091,Barbados
+1092,Belgium
+1093,Bangladesh
+1094,Belize
+1095,Bolivia
+1096,Solomon Island
+1097,Navassa Island
+1098,Mauritius
+1099,Italy
+1100,Saudi Arabia
+1101,Puerto Rico
+1102,Spain
+1103,Brazil
+1104,Bhutan
+1105,Bulgaria
+1106,Brunei
+1107,Burundi
+1108,Canada
+1109,Cambodia
+1110,Chad
+1111,Sri Lanka
+1112,Congo
+1113,China (Peking)
+1114,Chile
+1115,Cayman Islands
+1116,Cocos Islands
+1117,Cameroon
+1118,Comoros
+1119,Costa Rica
+1120,Cuba
+1121,Republic of Cape Verde
+1122,Cook Islands
+1123,Cyprus
+1124,Czechoslovakia
+1125,Denmark
+1126,Djibouti
+1127,Benin
+1128,Dominica
+1129,Dominican Republic
+1130,Ecuador
+1131,Ireland
+1132,Equ Guinea
+1133,Canton/Ender Is
+1134,El Salvador
+1135,Ethiopia
+1136,Falkland Is
+1137,French Guiana
+1138,Finland
+1139,Fiji
+1140,Faroe Islands
+1141,Fr Polynesia
+1142,Fr S Ant Lands
+1143,Gabon
+1144,East Germany
+1145,West Germany
+1146,Ghana
+1147,Gibraltar
+1148,Grenada
+1149,Greenland
+1150,Guadeloupe
+1151,Greece
+1152,Gilbert Islands
+1153,Guatemala
+1154,Guinea
+1155,Guyana
+1156,Haiti
+1157,Hong Kong
+1158,Heard/McDon Is
+1159,Honduras
+1160,Hungary
+1161,Iceland
+1162,Brit Ind Oc Ter
+1163,Iran
+1164,Israel
+1165,Ivory Coast
+1166,Iraq
+1167,Japan
+1168,Jamaica
+1169,Jordan
+1170,Johnston Atoll
+1171,Svalbard / Jan Ma
+1172,Kenya
+1173,North Korea
+1174,Christmas Is
+1175,Kuwait
+1176,Labrador
+1177,Lebanon
+1178,Liberia
+1179,Liechtenstein
+1180,Lesotho
+1181,Luxembourg
+1182,Libya
+1183,Manitoba
+1184,Macao
+1185,Mongolia
+1186,Montserrat
+1187,Mali
+1188,Mauritius
+1189,Midway Islands
+1190,Mauritania
+1191,Oman
+1192,Maldives
+1193,Mexico
+1194,Malaysia
+1195,Mozambique
+1196,Netherlands Ant
+1197,New Brunswick
+1198,Newfoundland
+1199,Niger
+1200,Nigeria
+1201,Netherlands
+1202,Norway
+1203,Nepal
+1204,Mauru
+1205,Nova Scotia
+1206,Northwest Terr
+1207,Nicaragua
+1208,New Zealand
+1209,Channel Islands
+1210,Ontario
+1211,Pitcairn
+1212,Prince Ed Is
+1213,Paracel Islands
+1214,Spratly Islands
+1215,Pakistan
+1216,Poland
+1217,Panama
+1218,Portugal
+1219,Papua NW Guinea
+1220,Quebec
+1221,Portugese Timor
+1222,Guinea-Bissau
+1223,Qatar
+1224,Reunion
+1225,South Rhodesia
+1226,Romania
+1227,Philippines
+1228,Rwanda
+1229,Saudi Arabia
+1230,St Pierre Miqu
+1231,Seychelles
+1232,South Africa
+1233,Senegal
+1234,St Helena
+1235,Saipan
+1236,Saskatchewan
+1237,Sierra Leone
+1238,San Marino
+1239,Singapore
+1240,Somalia
+1241,St Lucia
+1242,Sudan
+1243,Sweden
+1244,Syria
+1245,Switzerland
+1246,Un Arab Emirate
+1247,Trinidad-Tobago
+1248,Thailand
+1249,Turks Caicos Is
+1250,Tokelau Is
+1251,Togo
+1252,Sao Tome/Princi
+1253,Trust Ter Pa Is
+1254,Tunisia
+1255,Turkey
+1256,Tuvalu
+1257,China (Taiwan)
+1258,Tanzania
+1259,Uganda
+1260,United Kingdom
+1261,Russia
+1262,United States
+1263,Upper Volta
+1264,Uruguay
+1265,St Vincent
+1266,Venezuela
+1267,Brit Virgin Is
+1268,Vietnam
+1269,Virgin Island
+1270,Vitican City
+1271,Wallis/Futuna
+1272,Wake Island
+1273,Western Samoa
+1274,Swaziland
+1275,Yeman (North)
+1276,Yukon Terr
+1277,Yugoslavia
+1278,Yemen (South)
+1279,Zambia
+1280,Guam
+1281,Foreign Country
+1282,Fed States-Micronesia
+1283,Guam
+1284,American Samoa
+1285,AP

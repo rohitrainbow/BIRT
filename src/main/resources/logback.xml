@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml> 
+<configuration>
+
+ <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>../logs/BPS_BIRT_Reports.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d [%thread] %-5level  %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+	<logger name="org.springframework" level="error" additivity="false">
+		<appender-ref ref="fileAppender" />
+	</logger>
+	
+	<logger name="com.dxc.reports" level="debug" additivity="false">
+		<appender-ref ref="fileAppender" />
+	</logger>
+	
+	<root level="error">
+		<appender-ref ref="fileAppender" />
+	</root>
+
+</configuration>

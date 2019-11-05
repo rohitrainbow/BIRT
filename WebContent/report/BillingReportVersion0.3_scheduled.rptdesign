@@ -1,0 +1,1700 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <list-property name="propertyBindings">
+        <structure>
+            <property name="name">queryText</property>
+            <property name="id">5</property>
+        </structure>
+        <structure>
+            <property name="name">queryTimeOut</property>
+            <property name="id">5</property>
+        </structure>
+        <structure>
+            <property name="name">rowFetchSize</property>
+            <property name="id">5</property>
+        </structure>
+    </list-property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="DBPARAM" id="495">
+            <property name="hidden">true</property>
+            <text-property name="helpText">DBPARAM</text-property>
+            <text-property name="promptText">ClientName</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ReportName" id="6656">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <method name="getDefaultValueList"><![CDATA[var reportName = reportContext.getReportRunnable().getReportName();
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));]]></method>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="StartDate" id="4370">
+            <property name="hidden">true</property>
+            <text-property name="helpText">Start Date</text-property>
+            <text-property name="promptText">Start Date (YYYY-MM-DD)</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">Formatter.format(BirtDateTime.today(),"yyyy-MM-dd")</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="EndDate" id="4371">
+            <property name="hidden">true</property>
+            <text-property name="helpText">End Date (YYYY-MM-DD)</text-property>
+            <text-property name="promptText">End Date (YYYY-MM-DD)</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">Formatter.format(BirtDateTime.today(),"yyyy-MM-dd")</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="SendEmail" id="6657">
+            <property name="hidden">true</property>
+            <text-property name="helpText">SendEmail</text-property>
+            <text-property name="promptText">SendEmail</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="BPS" id="4">
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.birt );
+rp=new SetDatabaseDetails();
+dbDetails=new Array();
+dbDetails=rp.dbDetailsReader(params["DBPARAM"].value);
+this.setExtensionProperty("odaURL",dbDetails[0]);
+this.setExtensionProperty("odaUser",dbDetails[1]);
+this.setExtensionProperty("odaPassword",dbDetails[2]);
+vars["startTime"]=(new Date()).getTime();]]></method>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">com.ibm.db2.jcc.DB2Driver</property>
+            <property name="odaURL">jdbc:db2://20.15.86.32:50002/ACCELAIG</property>
+            <property name="odaUser">uniauser1</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">VW5pYVUkZXIx</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ALL_VALUES" id="5">
+            <list-property name="computedColumns">
+                <structure>
+                    <property name="name">FLAGS</property>
+                    <expression name="expression">if(row["CONTESTABLE"]==1)&#13;
+{&#13;
+ 'C';&#13;
+}</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">LOBIV</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">LOBIV</text-property>
+                    <text-property name="heading">LOBIV</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CLAIMID</text-property>
+                    <text-property name="heading">CLAIMID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMNUMBER</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CLAIMNUMBER</text-property>
+                    <text-property name="heading">CLAIMNUMBER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">UPDATEDWHEN</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">UPDATEDWHEN</text-property>
+                    <text-property name="heading">UPDATEDWHEN</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMPOLICYID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CLAIMPOLICYID</text-property>
+                    <text-property name="heading">CLAIMPOLICYID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PROCESSING_SITE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PROCESSING_SITE</text-property>
+                    <text-property name="heading">PROCESSING_SITE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMTYPE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CLAIMTYPE</text-property>
+                    <text-property name="heading">CLAIMTYPE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">INSUREDID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">INSUREDID</text-property>
+                    <text-property name="heading">INSUREDID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">MANNEROFOCCURRENCE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">MANNEROFOCCURRENCE</text-property>
+                    <text-property name="heading">MANNEROFOCCURRENCE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">NOTIFYRCPTDATE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">NOTIFYRCPTDATE</text-property>
+                    <text-property name="heading">NOTIFYRCPTDATE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">OCCURRENCEDATE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">OCCURRENCEDATE</text-property>
+                    <text-property name="heading">OCCURRENCEDATE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMMGMTSTATUS</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CLAIMMGMTSTATUS</text-property>
+                    <text-property name="heading">CLAIMMGMTSTATUS</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMMGMTSTATUSREASON</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">CLAIMMGMTSTATUSREASON</text-property>
+                    <text-property name="heading">CLAIMMGMTSTATUSREASON</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">EXAMINER</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">EXAMINER</text-property>
+                    <text-property name="heading">EXAMINER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">POLICYNUMBER</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">POLICYNUMBER</text-property>
+                    <text-property name="heading">POLICYNUMBER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">POLCVRGCLAIMSTATUS</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">POLCVRGCLAIMSTATUS</text-property>
+                    <text-property name="heading">POLCVRGCLAIMSTATUS</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">POLCVRGCLAIMSTATUSREASON</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">POLCVRGCLAIMSTATUSREASON</text-property>
+                    <text-property name="heading">POLCVRGCLAIMSTATUSREASON</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">DATEPAID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">DATEPAID</text-property>
+                    <text-property name="heading">DATEPAID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMPAYMENTSTATUS</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CLAIMPAYMENTSTATUS</text-property>
+                    <text-property name="heading">CLAIMPAYMENTSTATUS</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CONTESTABLE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CONTESTABLE</text-property>
+                    <text-property name="heading">CONTESTABLE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">COMPROMISED</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">COMPROMISED</text-property>
+                    <text-property name="heading">COMPROMISED</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAIDTOINTERPLEADER</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAIDTOINTERPLEADER</text-property>
+                    <text-property name="heading">PAIDTOINTERPLEADER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">UNDERLEGALREVIEW</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">UNDERLEGALREVIEW</text-property>
+                    <text-property name="heading">UNDERLEGALREVIEW</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">COMMONDISASTERCLAUSE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">COMMONDISASTERCLAUSE</text-property>
+                    <text-property name="heading">COMMONDISASTERCLAUSE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">BPO_CLAIMDEFERRED</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">BPO_CLAIMDEFERRED</text-property>
+                    <text-property name="heading">BPO_CLAIMDEFERRED</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">BPO_VIATICALCLAIM</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">BPO_VIATICALCLAIM</text-property>
+                    <text-property name="heading">BPO_VIATICALCLAIM</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">BPO_CLIENTREVIEWREQUIRED</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">BPO_CLIENTREVIEWREQUIRED</text-property>
+                    <text-property name="heading">BPO_CLIENTREVIEWREQUIRED</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">BPO_UNDERINVESTIGATION</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">BPO_UNDERINVESTIGATION</text-property>
+                    <text-property name="heading">BPO_UNDERINVESTIGATION</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">OCCURRENCECOUNTRY</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">OCCURRENCECOUNTRY</text-property>
+                    <text-property name="heading">OCCURRENCECOUNTRY</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMPOLICYUNDERLEGALREVIEW</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CLAIMPOLICYUNDERLEGALREVIEW</text-property>
+                    <text-property name="heading">CLAIMPOLICYUNDERLEGALREVIEW</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMPOLICYBPO_CLAIMDEFERRED</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">CLAIMPOLICYBPO_CLAIMDEFERRED</text-property>
+                    <text-property name="heading">CLAIMPOLICYBPO_CLAIMDEFERRED</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMPOLICYBPO_VIATICALCLAIM</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">CLAIMPOLICYBPO_VIATICALCLAIM</text-property>
+                    <text-property name="heading">CLAIMPOLICYBPO_VIATICALCLAIM</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMSPOLICYREVIEWREQUIRED</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">CLAIMSPOLICYREVIEWREQUIRED</text-property>
+                    <text-property name="heading">CLAIMSPOLICYREVIEWREQUIRED</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIMPOLICYUNDERINVESTIGATION</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">CLAIMPOLICYUNDERINVESTIGATION</text-property>
+                    <text-property name="heading">CLAIMPOLICYUNDERINVESTIGATION</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">POLICYUPDATEDWHEN</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">POLICYUPDATEDWHEN</text-property>
+                    <text-property name="heading">POLICYUPDATEDWHEN</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLIENT_ID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CLIENT_ID</text-property>
+                    <text-property name="heading">CLIENT_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">SEARCH_COMPANY_NAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">SEARCH_COMPANY_NAME</text-property>
+                    <text-property name="heading">SEARCH_COMPANY_NAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">SEARCH_FIRST_NAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">SEARCH_FIRST_NAME</text-property>
+                    <text-property name="heading">SEARCH_FIRST_NAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">SEARCH_LAST_NAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">SEARCH_LAST_NAME</text-property>
+                    <text-property name="heading">SEARCH_LAST_NAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">BPO_SEARCH_MIDDLE_NAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">BPO_SEARCH_MIDDLE_NAME</text-property>
+                    <text-property name="heading">BPO_SEARCH_MIDDLE_NAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">GOV_ID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">GOV_ID</text-property>
+                    <text-property name="heading">GOV_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">GOV_ID_TYPE</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">GOV_ID_TYPE</text-property>
+                    <text-property name="heading">GOV_ID_TYPE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLIENT_TYPE_ID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CLIENT_TYPE_ID</text-property>
+                    <text-property name="heading">CLIENT_TYPE_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">HOSTCONTRACTID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">HOSTCONTRACTID</text-property>
+                    <text-property name="heading">HOSTCONTRACTID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CARRIERCODE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CARRIERCODE</text-property>
+                    <text-property name="heading">CARRIERCODE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ISSUEDATE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">ISSUEDATE</text-property>
+                    <text-property name="heading">ISSUEDATE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ISSUESTATE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">ISSUESTATE</text-property>
+                    <text-property name="heading">ISSUESTATE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">AGE</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">AGE</text-property>
+                    <text-property name="heading">AGE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">BPO_REGIONID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">BPO_REGIONID</text-property>
+                    <text-property name="heading">BPO_REGIONID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PRODUCTTYPE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PRODUCTTYPE</text-property>
+                    <text-property name="heading">PRODUCTTYPE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">LINEOFBUSINESS</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">LINEOFBUSINESS</text-property>
+                    <text-property name="heading">LINEOFBUSINESS</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">LOBIV</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">CLAIMID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">CLAIMNUMBER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">UPDATEDWHEN</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">CLAIMPOLICYID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">PROCESSING_SITE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">CLAIMTYPE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">INSUREDID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">MANNEROFOCCURRENCE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">NOTIFYRCPTDATE</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">OCCURRENCEDATE</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">CLAIMMGMTSTATUS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">CLAIMMGMTSTATUSREASON</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">EXAMINER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">POLICYNUMBER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">POLCVRGCLAIMSTATUS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">POLCVRGCLAIMSTATUSREASON</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">DATEPAID</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">CLAIMPAYMENTSTATUS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">CONTESTABLE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">COMPROMISED</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">PAIDTOINTERPLEADER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">UNDERLEGALREVIEW</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">COMMONDISASTERCLAUSE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">25</property>
+                        <property name="name">BPO_CLAIMDEFERRED</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">26</property>
+                        <property name="name">BPO_VIATICALCLAIM</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">27</property>
+                        <property name="name">BPO_CLIENTREVIEWREQUIRED</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">28</property>
+                        <property name="name">BPO_UNDERINVESTIGATION</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">29</property>
+                        <property name="name">OCCURRENCECOUNTRY</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">30</property>
+                        <property name="name">CLAIMPOLICYUNDERLEGALREVIEW</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">31</property>
+                        <property name="name">CLAIMPOLICYBPO_CLAIMDEFERRED</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">32</property>
+                        <property name="name">CLAIMPOLICYBPO_VIATICALCLAIM</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">33</property>
+                        <property name="name">CLAIMSPOLICYREVIEWREQUIRED</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">34</property>
+                        <property name="name">CLAIMPOLICYUNDERINVESTIGATION</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">35</property>
+                        <property name="name">POLICYUPDATEDWHEN</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">36</property>
+                        <property name="name">CLIENT_ID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">37</property>
+                        <property name="name">SEARCH_COMPANY_NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">38</property>
+                        <property name="name">SEARCH_FIRST_NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">39</property>
+                        <property name="name">SEARCH_LAST_NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">40</property>
+                        <property name="name">BPO_SEARCH_MIDDLE_NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">41</property>
+                        <property name="name">GOV_ID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">42</property>
+                        <property name="name">GOV_ID_TYPE</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">43</property>
+                        <property name="name">CLIENT_TYPE_ID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">44</property>
+                        <property name="name">HOSTCONTRACTID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">45</property>
+                        <property name="name">CARRIERCODE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">46</property>
+                        <property name="name">ISSUEDATE</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">47</property>
+                        <property name="name">ISSUESTATE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">48</property>
+                        <property name="name">AGE</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">49</property>
+                        <property name="name">BPO_REGIONID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">50</property>
+                        <property name="name">PRODUCTTYPE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">51</property>
+                        <property name="name">LINEOFBUSINESS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">52</property>
+                        <property name="name">FLAGS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.validator);
+importPackage( Packages.com.dxc.reports.birt);
+FileAccess.fileCreated=0;
+History.historyCreated=0;
+inputValidator=new InputValidator();
+if(inputValidator.dateValidator(params["StartDate"].value)==true &amp;&amp; inputValidator.dateValidator(params["EndDate"].value)==true &amp;&amp; inputValidator.dateCheck(params["StartDate"].value,params["EndDate"].value)==true)
+{
+this.queryText = this.queryText.replace("/**dates**/","AND CLAIMS.CLAIMPOLICY.CYBERPAIDDATE BETWEEN '" +params["StartDate"].value+ "' AND '" +params["EndDate"].value+"'");
+}
+else
+{
+this.queryText = this.queryText.replace("/**dates**/","AND CLAIMS.CLAIMPOLICY.CYBERPAIDDATE BETWEEN " +null+ " AND " +null);
+} ]]></method>
+            <property name="dataSource">BPS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">LOBIV</property>
+                    <property name="nativeName">LOBIV</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">CLAIMID</property>
+                    <property name="nativeName">CLAIMID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">CLAIMNUMBER</property>
+                    <property name="nativeName">CLAIMNUMBER</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">UPDATEDWHEN</property>
+                    <property name="nativeName">UPDATEDWHEN</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">CLAIMPOLICYID</property>
+                    <property name="nativeName">CLAIMPOLICYID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">PROCESSING_SITE</property>
+                    <property name="nativeName">PROCESSING_SITE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">CLAIMTYPE</property>
+                    <property name="nativeName">CLAIMTYPE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">INSUREDID</property>
+                    <property name="nativeName">INSUREDID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">MANNEROFOCCURRENCE</property>
+                    <property name="nativeName">MANNEROFOCCURRENCE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">NOTIFYRCPTDATE</property>
+                    <property name="nativeName">NOTIFYRCPTDATE</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">OCCURRENCEDATE</property>
+                    <property name="nativeName">OCCURRENCEDATE</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">CLAIMMGMTSTATUS</property>
+                    <property name="nativeName">CLAIMMGMTSTATUS</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">CLAIMMGMTSTATUSREASON</property>
+                    <property name="nativeName">CLAIMMGMTSTATUSREASON</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">EXAMINER</property>
+                    <property name="nativeName">EXAMINER</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">POLICYNUMBER</property>
+                    <property name="nativeName">POLICYNUMBER</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">POLCVRGCLAIMSTATUS</property>
+                    <property name="nativeName">POLCVRGCLAIMSTATUS</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">POLCVRGCLAIMSTATUSREASON</property>
+                    <property name="nativeName">POLCVRGCLAIMSTATUSREASON</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">DATEPAID</property>
+                    <property name="nativeName">DATEPAID</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">CLAIMPAYMENTSTATUS</property>
+                    <property name="nativeName">CLAIMPAYMENTSTATUS</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">CONTESTABLE</property>
+                    <property name="nativeName">CONTESTABLE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">COMPROMISED</property>
+                    <property name="nativeName">COMPROMISED</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">PAIDTOINTERPLEADER</property>
+                    <property name="nativeName">PAIDTOINTERPLEADER</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">UNDERLEGALREVIEW</property>
+                    <property name="nativeName">UNDERLEGALREVIEW</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">24</property>
+                    <property name="name">COMMONDISASTERCLAUSE</property>
+                    <property name="nativeName">COMMONDISASTERCLAUSE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">25</property>
+                    <property name="name">BPO_CLAIMDEFERRED</property>
+                    <property name="nativeName">BPO_CLAIMDEFERRED</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">5</property>
+                </structure>
+                <structure>
+                    <property name="position">26</property>
+                    <property name="name">BPO_VIATICALCLAIM</property>
+                    <property name="nativeName">BPO_VIATICALCLAIM</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">5</property>
+                </structure>
+                <structure>
+                    <property name="position">27</property>
+                    <property name="name">BPO_CLIENTREVIEWREQUIRED</property>
+                    <property name="nativeName">BPO_CLIENTREVIEWREQUIRED</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">5</property>
+                </structure>
+                <structure>
+                    <property name="position">28</property>
+                    <property name="name">BPO_UNDERINVESTIGATION</property>
+                    <property name="nativeName">BPO_UNDERINVESTIGATION</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">5</property>
+                </structure>
+                <structure>
+                    <property name="position">29</property>
+                    <property name="name">OCCURRENCECOUNTRY</property>
+                    <property name="nativeName">OCCURRENCECOUNTRY</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">30</property>
+                    <property name="name">CLAIMPOLICYUNDERLEGALREVIEW</property>
+                    <property name="nativeName">CLAIMPOLICYUNDERLEGALREVIEW</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">31</property>
+                    <property name="name">CLAIMPOLICYBPO_CLAIMDEFERRED</property>
+                    <property name="nativeName">CLAIMPOLICYBPO_CLAIMDEFERRED</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">5</property>
+                </structure>
+                <structure>
+                    <property name="position">32</property>
+                    <property name="name">CLAIMPOLICYBPO_VIATICALCLAIM</property>
+                    <property name="nativeName">CLAIMPOLICYBPO_VIATICALCLAIM</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">5</property>
+                </structure>
+                <structure>
+                    <property name="position">33</property>
+                    <property name="name">CLAIMSPOLICYREVIEWREQUIRED</property>
+                    <property name="nativeName">CLAIMSPOLICYREVIEWREQUIRED</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">5</property>
+                </structure>
+                <structure>
+                    <property name="position">34</property>
+                    <property name="name">CLAIMPOLICYUNDERINVESTIGATION</property>
+                    <property name="nativeName">CLAIMPOLICYUNDERINVESTIGATION</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">5</property>
+                </structure>
+                <structure>
+                    <property name="position">35</property>
+                    <property name="name">POLICYUPDATEDWHEN</property>
+                    <property name="nativeName">POLICYUPDATEDWHEN</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">36</property>
+                    <property name="name">CLIENT_ID</property>
+                    <property name="nativeName">CLIENT_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">37</property>
+                    <property name="name">SEARCH_COMPANY_NAME</property>
+                    <property name="nativeName">SEARCH_COMPANY_NAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">38</property>
+                    <property name="name">SEARCH_FIRST_NAME</property>
+                    <property name="nativeName">SEARCH_FIRST_NAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">39</property>
+                    <property name="name">SEARCH_LAST_NAME</property>
+                    <property name="nativeName">SEARCH_LAST_NAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">40</property>
+                    <property name="name">BPO_SEARCH_MIDDLE_NAME</property>
+                    <property name="nativeName">BPO_SEARCH_MIDDLE_NAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">41</property>
+                    <property name="name">GOV_ID</property>
+                    <property name="nativeName">GOV_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">42</property>
+                    <property name="name">GOV_ID_TYPE</property>
+                    <property name="nativeName">GOV_ID_TYPE</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">43</property>
+                    <property name="name">CLIENT_TYPE_ID</property>
+                    <property name="nativeName">CLIENT_TYPE_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">44</property>
+                    <property name="name">HOSTCONTRACTID</property>
+                    <property name="nativeName">HOSTCONTRACTID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">45</property>
+                    <property name="name">CARRIERCODE</property>
+                    <property name="nativeName">CARRIERCODE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">46</property>
+                    <property name="name">ISSUEDATE</property>
+                    <property name="nativeName">ISSUEDATE</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">47</property>
+                    <property name="name">ISSUESTATE</property>
+                    <property name="nativeName">ISSUESTATE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">48</property>
+                    <property name="name">AGE</property>
+                    <property name="nativeName">AGE</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">49</property>
+                    <property name="name">BPO_REGIONID</property>
+                    <property name="nativeName">BPO_REGIONID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">50</property>
+                    <property name="name">PRODUCTTYPE</property>
+                    <property name="nativeName">PRODUCTTYPE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">51</property>
+                    <property name="name">LINEOFBUSINESS</property>
+                    <property name="nativeName">LINEOFBUSINESS</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT
+LOB.internal_value as LOBIV,
+CLAIMS.CLAIM.CLAIMID,
+CLAIMS.CLAIM.CLAIMNUMBER,
+MAX(CLAIMS.CLAIMPOLICY.UPDATED_WHEN)AS updatedWhen,
+CLAIMS.CLAIMPOLICY.CLAIMPOLICYID,
+PSITE.DESCR AS PROCESSING_SITE,
+CTYPE.DESCR AS CLAIMTYPE, 
+CLAIMS.CLAIM.INSUREDID, 
+MLOSS.DESCR AS MANNEROFOCCURRENCE,
+CLAIMS.CLAIM.NOTIFYRCPTDATE,
+CLAIMS.CLAIM.OCCURRENCEDATE, 
+CLMMSTATUS.DESCR AS CLAIMMGMTSTATUS, 
+CLAIMS.CLAIM.CLAIMMGMTSTATUSREASON, 
+CLAIMS.CLAIM.EXAMINER,
+CLAIMS.CLAIMPOLICY.POLICYNUMBER, 
+PCVRG.DESCR AS POLCVRGCLAIMSTATUS,
+CLAIMS.CLAIMPOLICY.POLCVRGCLAIMSTATUSREASON,
+MAX(CLAIMS.PAYMENT.DATEPAID)as datePaid,
+CPYMNT.DESCR AS CLAIMPAYMENTSTATUS,
+CLAIMS.CLAIMPOLICY.CONTESTABLE,
+CLAIMS.CLAIM.COMPROMISED,
+CLAIMS.CLAIM.PAIDTOINTERPLEADER,
+CLAIMS.CLAIM.UNDERLEGALREVIEW, 
+CLAIMS.CLAIM.COMMONDISASTERCLAUSE,
+CLAIMS.CLAIM.BPO_CLAIMDEFERRED,
+CLAIMS.CLAIM.BPO_VIATICALCLAIM,
+CLAIMS.CLAIM.BPO_CLIENTREVIEWREQUIRED,
+CLAIMS.CLAIM.BPO_UNDERINVESTIGATION,
+CLAIMS.CLAIM.OCCURRENCECOUNTRY,
+CLAIMS.CLAIMPOLICY.UNDERLEGALREVIEW AS CLAIMPOLICYUNDERLEGALREVIEW,
+CLAIMS.CLAIMPOLICY.BPO_CLAIMDEFERRED AS CLAIMPOLICYBPO_CLAIMDEFERRED,
+CLAIMS.CLAIMPOLICY.BPO_VIATICALCLAIM AS CLAIMPOLICYBPO_VIATICALCLAIM,
+CLAIMS.CLAIMPOLICY.BPO_CLIENTREVIEWREQUIRED AS CLAIMSPOLICYREVIEWREQUIRED,
+CLAIMS.CLAIMPOLICY.BPO_UNDERINVESTIGATION AS CLAIMPOLICYUNDERINVESTIGATION,
+POLICY.LIFEPOLICY.UPDATED_WHEN AS POLICYUPDATEDWHEN,
+CLIENT.PARTY.CLIENT_ID,
+CLIENT.PARTY.SEARCH_COMPANY_NAME,
+CLIENT.PARTY.SEARCH_FIRST_NAME,
+CLIENT.PARTY.SEARCH_LAST_NAME, 
+CLIENT.PARTY.BPO_SEARCH_MIDDLE_NAME,
+CLIENT.PARTY.GOV_ID, 
+CLIENT.PARTY.GOV_ID_TYPE,
+CLNTTYPE.DESCR AS CLIENT_TYPE_ID,
+POLICY.LIFEPOLICY.HOSTCONTRACTID,  
+LEFT(CCODE.DESCR,3) AS CARRIERCODE, 
+POLICY.LIFEPOLICY.ISSUEDATE, 
+STATE.DESCR AS ISSUESTATE, 
+POLICY.LIFEPOLICY.AGE, 
+REGION.DESCR AS BPO_REGIONID, 
+PRODTYPE.DESCR AS PRODUCTTYPE, 
+LOB.DESCR AS LINEOFBUSINESS
+FROM ((((((((((((((((CLAIMS.CLAIM 
+inner join claims.claimpolicy on claims.claim.claimid=claims.claimpolicy.claimid)
+INNER JOIN claims.payment ON claims.claim.claimid=claims.payment.claimid)
+LEFT OUTER JOIN POLICY.LIFEPOLICY ON CLAIMS.CLAIMPOLICY.HOSTCONTRACTID = POLICY.LIFEPOLICY.HOSTCONTRACTID)
+LEFT OUTER JOIN CLIENT.PARTY ON CLAIMS.CLAIM.INSUREDID = CLIENT.PARTY.CLIENT_ID) 
+LEFT OUTER JOIN CLIENT.PERSON_DETAIL ON CLIENT.PARTY.CLIENT_ID = CLIENT.PERSON_DETAIL.CLIENT_ID)
+LEFT OUTER JOIN AV.PROCESSINGSITES PSITE ON PSITE.INTERNAL_VALUE=CLAIMS.CLAIM.PROCESSING_SITE)
+LEFT OUTER JOIN AV.CLAIMTYPES CTYPE ON CTYPE.INTERNAL_VALUE= CLAIMS.CLAIM.CLAIMTYPE)
+LEFT OUTER JOIN AV.MANNEROFLOSS MLOSS ON MLOSS.INTERNAL_VALUE=CLAIMS.CLAIM.MANNEROFOCCURRENCE)
+LEFT OUTER JOIN AV.CLAIMMANAGEMENTSTATUS CLMMSTATUS ON CLMMSTATUS.INTERNAL_VALUE=CLAIMS.CLAIM.CLAIMMGMTSTATUS)
+LEFT OUTER JOIN AV.POLICYCOVERAGECLAIMSTATUS PCVRG ON PCVRG.INTERNAL_VALUE=CLAIMS.CLAIMPOLICY.POLCVRGCLAIMSTATUS)
+LEFT OUTER JOIN AV.CLAIMPAYMENTSTATUS CPYMNT ON CPYMNT.INTERNAL_VALUE=CLAIMS.PAYMENT.CLAIMPAYMENTSTATUS)
+LEFT OUTER JOIN AV.GROUPINDICATOR CLNTTYPE ON CLNTTYPE.INTERNAL_VALUE=CLIENT.PARTY.CLIENT_TYPE_ID)
+LEFT OUTER JOIN AV.COMPANYCODE CCODE ON CCODE.INTERNAL_VALUE=POLICY.LIFEPOLICY.CARRIERCODE)
+LEFT OUTER JOIN AV.STATE STATE ON STATE.INTERNAL_VALUE=POLICY.LIFEPOLICY.ISSUESTATE
+LEFT OUTER JOIN AV.REGION REGION ON REGION.INTERNAL_VALUE=POLICY.LIFEPOLICY.BPO_REGIONID)
+LEFT OUTER JOIN AV.POLICYPRODUCTCODE PRODTYPE ON PRODTYPE.INTERNAL_VALUE=POLICY.LIFEPOLICY.PRODUCTTYPE)
+LEFT OUTER JOIN AV.LINEOFBUSINESS LOB ON LOB.INTERNAL_VALUE=POLICY.LIFEPOLICY.LINEOFBUSINESS)
+where (((CLAIMS.CLAIMPOLICY.UPDATED_WHEN)=(select max(updated_when) from Claims.ClaimPolicy B  where Claims.ClaimPolicy.PolicyNumber = B.PolicyNumber))
+AND claims.claimpolicy.POLCVRGCLAIMSTATUS = 5 
+AND ((POLICY.LIFEPOLICY.UPDATED_WHEN)=(select max(updated_when) from Policy.LifePolicy B where Policy.LifePolicy.HostContractId = B.HostContractId)))
+/**dates**/
+group by 
+CLAIMS.CLAIM.CLAIMID,
+CLAIMS.CLAIM.CLAIMNUMBER,
+CLAIMS.CLAIMPOLICY.CLAIMPOLICYID, 
+CLAIMS.CLAIM.INSUREDID, 
+CLAIMS.CLAIM.NOTIFYRCPTDATE,
+CLAIMS.CLAIM.OCCURRENCEDATE, 
+CLAIMS.CLAIM.CLAIMMGMTSTATUSREASON, 
+CLAIMS.CLAIM.EXAMINER,
+CLAIMS.CLAIMPOLICY.POLICYNUMBER, 
+CLAIMS.CLAIMPOLICY.POLCVRGCLAIMSTATUSREASON,
+CLAIMS.CLAIMPOLICY.CONTESTABLE,
+CLAIMS.CLAIM.COMPROMISED,
+CLAIMS.CLAIM.PAIDTOINTERPLEADER,
+CLAIMS.CLAIM.UNDERLEGALREVIEW, 
+CLAIMS.CLAIM.COMMONDISASTERCLAUSE,
+CLAIMS.CLAIM.BPO_CLAIMDEFERRED,
+CLAIMS.CLAIM.BPO_VIATICALCLAIM,
+CLAIMS.CLAIM.BPO_CLIENTREVIEWREQUIRED,
+CLAIMS.CLAIM.BPO_UNDERINVESTIGATION,
+CLAIMS.CLAIM.OCCURRENCECOUNTRY,
+CLAIMS.CLAIMPOLICY.UNDERLEGALREVIEW ,
+CLAIMS.CLAIMPOLICY.BPO_CLAIMDEFERRED,
+CLAIMS.CLAIMPOLICY.BPO_VIATICALCLAIM ,
+CLAIMS.CLAIMPOLICY.BPO_CLIENTREVIEWREQUIRED ,
+CLAIMS.CLAIMPOLICY.BPO_UNDERINVESTIGATION, 
+POLICY.LIFEPOLICY.UPDATED_WHEN,
+CLIENT.PARTY.CLIENT_ID,
+CLIENT.PARTY.SEARCH_COMPANY_NAME,
+CLIENT.PARTY.SEARCH_FIRST_NAME,
+CLIENT.PARTY.SEARCH_LAST_NAME, 
+CLIENT.PARTY.BPO_SEARCH_MIDDLE_NAME,
+CLIENT.PARTY.GOV_ID, 
+CLIENT.PARTY.GOV_ID_TYPE,
+POLICY.LIFEPOLICY.HOSTCONTRACTID,  
+POLICY.LIFEPOLICY.ISSUEDATE, 
+POLICY.LIFEPOLICY.AGE,  
+LOB.DESCR,
+PSITE.DESCR,
+CTYPE.DESCR,
+MLOSS.DESCR,
+CLMMSTATUS.DESCR,
+PCVRG.DESCR,
+CPYMNT.DESCR,
+CLNTTYPE.DESCR,
+CCODE.DESCR,
+STATE.DESCR,
+REGION.DESCR,
+PRODTYPE.DESCR,
+LOB.internal_value]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">custom</property>
+            <property name="height">11in</property>
+            <property name="width">12in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="4372">
+            <property name="dataSet">ALL_VALUES</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">CLAIMNUMBER</property>
+                    <text-property name="displayName">CLAIMNUMBER</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CLAIMNUMBER"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PROCESSING_SITE</property>
+                    <text-property name="displayName">PROCESSING_SITE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PROCESSING_SITE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">CLAIMTYPE</property>
+                    <text-property name="displayName">CLAIMTYPE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CLAIMTYPE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">POLICYNUMBER</property>
+                    <text-property name="displayName">POLICYNUMBER</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["POLICYNUMBER"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">CARRIERCODE</property>
+                    <text-property name="displayName">CARRIERCODE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CARRIERCODE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">BPO_REGIONID</property>
+                    <text-property name="displayName">BPO_REGIONID</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["BPO_REGIONID"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PRODUCTTYPE</property>
+                    <text-property name="displayName">PRODUCTTYPE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PRODUCTTYPE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">LINEOFBUSINESS</property>
+                    <text-property name="displayName">LINEOFBUSINESS</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["LINEOFBUSINESS"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">FLAGS</property>
+                    <text-property name="displayName">FLAGS</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["FLAGS"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">Death Non Contestable:</text-property>
+                    <expression name="expression" type="javascript">if(dataSetRow["CLAIMTYPE"]=='Death Claim' &amp;&amp; dataSetRow["CONTESTABLE"]!=1 &amp;&amp; dataSetRow["LOBIV"]!=909 &amp;&amp; dataSetRow["LOBIV"]!=910)&#13;
+vars["DNC"]=vars["DNC"]+1;&#13;
+BirtStr.concat('Death Non Contestable:',Formatter.format(vars["DNC"],"####"))</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding_1</property>
+                    <text-property name="displayName">Death Contestable:</text-property>
+                    <expression name="expression" type="javascript">'Death Contestable:'</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding_2</property>
+                    <text-property name="displayName">Deferred Annuity:</text-property>
+                    <expression name="expression" type="javascript">'Deferred Annuity:'</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding_3</property>
+                    <text-property name="displayName">Immediate Annuity</text-property>
+                    <expression name="expression" type="javascript">'Immediate Annuity:'</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding_4</property>
+                    <text-property name="displayName">Total For Company</text-property>
+                    <expression name="expression" type="javascript">BirtStr.concat('Total For Company ',dataSetRow["CARRIERCODE"])</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Total For Company</property>
+                    <text-property name="displayName">CARRIERCODE</text-property>
+                    <expression name="expression" type="javascript">BirtStr.concat('Total For Company ',dataSetRow["CARRIERCODE"])</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding_5</property>
+                    <text-property name="displayName">totalcount</text-property>
+                    <expression name="expression" type="javascript">Total.Count(dataSetRow["LOBIV"])</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation</property>
+                    <text-property name="displayName">totalcount</text-property>
+                    <property name="dataType">integer</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>Total For Company</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">COUNT</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_1</property>
+                    <text-property name="displayName">Death Non Contestable</text-property>
+                    <property name="dataType">integer</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>Total For Company</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">COUNT</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">if(dataSetRow["CLAIMTYPE"]=='Death Claim' &amp;&amp; dataSetRow["CONTESTABLE"]!=1 &amp;&amp; dataSetRow["LOBIV"]!=909 &amp;&amp; dataSetRow["LOBIV"]!=910)&#13;
+true;</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_2</property>
+                    <text-property name="displayName">Death Contestable</text-property>
+                    <property name="dataType">integer</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>Total For Company</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">COUNT</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">if(dataSetRow["CLAIMTYPE"]=='Death Claim' &amp;&amp; dataSetRow["CONTESTABLE"]==1 &amp;&amp; dataSetRow["LOBIV"]!=909 &amp;&amp; dataSetRow["LOBIV"]!=910)&#13;
+true;</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_3</property>
+                    <text-property name="displayName">Deferred Annuity</text-property>
+                    <property name="dataType">integer</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>Total For Company</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">COUNT</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">if(dataSetRow["PRODUCTTYPE"]=='Annuity' &amp;&amp; dataSetRow["LOBIV"]==909)&#13;
+true;</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_4</property>
+                    <text-property name="displayName">Immidiate Annuity</text-property>
+                    <property name="dataType">integer</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>Total For Company</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">COUNT</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">if(dataSetRow["PRODUCTTYPE"]=='Annuity' &amp;&amp; dataSetRow["LOBIV"]==910)&#13;
+true;</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="4417">
+                <property name="repeat">1</property>
+            </column>
+            <column id="4421">
+                <property name="repeat">1</property>
+            </column>
+            <column id="4420">
+                <property name="repeat">1</property>
+            </column>
+            <column id="4443">
+                <property name="repeat">1</property>
+            </column>
+            <column id="4419">
+                <property name="repeat">1</property>
+            </column>
+            <column id="4418"/>
+            <column id="6662"/>
+            <column id="4422"/>
+            <column id="4423"/>
+            <header>
+                <row id="7202">
+                    <property name="fontWeight">bold</property>
+                    <property name="textAlign">left</property>
+                    <cell id="7203">
+                        <text id="385">
+                            <property name="color">blue</property>
+                            <property name="textAlign">left</property>
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[USER SELECTIONS:]]></text-property>
+                        </text>
+                    </cell>
+                    <cell id="7204"/>
+                    <cell id="7205"/>
+                    <cell id="7206">
+                        <text-data id="4293">
+                            <property name="color">blue</property>
+                            <expression name="valueExpr">BirtStr.concat("FROM:",params["StartDate"].value)</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="7207"/>
+                    <cell id="7208"/>
+                    <cell id="7209">
+                        <text-data id="4294">
+                            <property name="color">blue</property>
+                            <expression name="valueExpr">BirtStr.concat("To:",params["EndDate"].value)</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="7210"/>
+                    <cell id="7211"/>
+                </row>
+                <row id="4373">
+                    <property name="fontWeight">bold</property>
+                    <property name="textAlign">left</property>
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="4376">
+                        <label id="4377">
+                            <text-property name="text">SITE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="4384">
+                        <label id="4385">
+                            <text-property name="text">REGION</text-property>
+                        </label>
+                    </cell>
+                    <cell id="4382">
+                        <label id="7257">
+                            <text-property name="text">COMPANY</text-property>
+                        </label>
+                    </cell>
+                    <cell id="4440">
+                        <label id="4448">
+                            <text-property name="text">CLAIM#</text-property>
+                        </label>
+                    </cell>
+                    <cell id="4380">
+                        <label id="4381">
+                            <text-property name="text">POLICYNUMBER</text-property>
+                        </label>
+                    </cell>
+                    <cell id="4378">
+                        <label id="4379">
+                            <text-property name="text">CLAIMTYPE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6659">
+                        <label id="6664">
+                            <text-property name="text">FLAGS</text-property>
+                        </label>
+                    </cell>
+                    <cell id="4386">
+                        <label id="4387">
+                            <text-property name="text">PRODUCTTYPE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="4388">
+                        <label id="4389">
+                            <text-property name="text">LINEOFBUSINESS</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <group id="7313">
+                <property name="groupName">Total For Company</property>
+                <expression name="keyExpr" type="javascript">row["CARRIERCODE"]</expression>
+                <structure name="toc">
+                    <expression name="expressionValue" type="javascript">row["CARRIERCODE"]</expression>
+                </structure>
+                <property name="hideDetail">false</property>
+                <header>
+                    <row id="7314">
+                        <property name="fontWeight">bold</property>
+                        <cell id="7315"/>
+                        <cell id="7316"/>
+                        <cell id="7317"/>
+                        <cell id="7318"/>
+                        <cell id="7319"/>
+                        <cell id="7320"/>
+                        <cell id="7321"/>
+                        <cell id="7322"/>
+                        <cell id="7323"/>
+                    </row>
+                </header>
+                <footer>
+                    <row id="7324">
+                        <property name="fontWeight">bold</property>
+                        <property name="whiteSpace">nowrap</property>
+                        <cell id="7325"/>
+                        <cell id="7326"/>
+                        <cell id="7327"/>
+                        <cell id="7328"/>
+                        <cell id="7329"/>
+                        <cell id="7330"/>
+                        <cell id="7331"/>
+                        <cell id="7332">
+                            <text id="7392">
+                                <property name="contentType">auto</property>
+                                <text-property name="content"><![CDATA[Death Non Contestable:]]></text-property>
+                            </text>
+                            <data id="7243">
+                                <property name="resultSetColumn">Column Binding_1</property>
+                            </data>
+                            <data id="7244">
+                                <property name="resultSetColumn">Column Binding_2</property>
+                            </data>
+                            <data id="7245">
+                                <property name="resultSetColumn">Column Binding_3</property>
+                            </data>
+                        </cell>
+                        <cell id="7333">
+                            <data id="7391">
+                                <property name="resultSetColumn">Aggregation_1</property>
+                            </data>
+                            <data id="7394">
+                                <property name="resultSetColumn">Aggregation_2</property>
+                            </data>
+                            <data id="7395">
+                                <property name="resultSetColumn">Aggregation_3</property>
+                            </data>
+                            <data id="7396">
+                                <property name="resultSetColumn">Aggregation_4</property>
+                            </data>
+                        </cell>
+                    </row>
+                    <row id="7377">
+                        <property name="fontWeight">bold</property>
+                        <property name="whiteSpace">nowrap</property>
+                        <cell id="7378"/>
+                        <cell id="7379"/>
+                        <cell id="7380"/>
+                        <cell id="7381"/>
+                        <cell id="7382"/>
+                        <cell id="7383"/>
+                        <cell id="7384">
+                            <data id="7334">
+                                <property name="resultSetColumn">Total For Company</property>
+                            </data>
+                        </cell>
+                        <cell id="7385">
+                            <data id="7390">
+                                <property name="resultSetColumn">Aggregation</property>
+                            </data>
+                        </cell>
+                        <cell id="7386"/>
+                    </row>
+                </footer>
+            </group>
+            <detail>
+                <row id="4390">
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="4393">
+                        <data id="4394">
+                            <property name="resultSetColumn">PROCESSING_SITE</property>
+                        </data>
+                    </cell>
+                    <cell id="4401">
+                        <data id="4402">
+                            <property name="resultSetColumn">BPO_REGIONID</property>
+                        </data>
+                    </cell>
+                    <cell id="4399">
+                        <data id="7258">
+                            <property name="resultSetColumn">CARRIERCODE</property>
+                        </data>
+                    </cell>
+                    <cell id="4441">
+                        <data id="4449">
+                            <property name="resultSetColumn">CLAIMNUMBER</property>
+                        </data>
+                    </cell>
+                    <cell id="4397">
+                        <data id="4398">
+                            <property name="resultSetColumn">POLICYNUMBER</property>
+                        </data>
+                    </cell>
+                    <cell id="4395">
+                        <data id="4396">
+                            <property name="resultSetColumn">CLAIMTYPE</property>
+                        </data>
+                    </cell>
+                    <cell id="6660">
+                        <data id="6665">
+                            <property name="resultSetColumn">FLAGS</property>
+                        </data>
+                    </cell>
+                    <cell id="4403">
+                        <data id="4404">
+                            <property name="resultSetColumn">PRODUCTTYPE</property>
+                        </data>
+                    </cell>
+                    <cell id="4405">
+                        <data id="4406">
+                            <property name="resultSetColumn">LINEOFBUSINESS</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+    </body>
+    <property name="pageVariables">
+        <variable-element name="startTime">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="DNC">
+            <expression name="value" type="javascript">0</expression>
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="TOTALCLAIM">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="IANNUITY">
+            <expression name="value" type="javascript">0</expression>
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="DANNUITY">
+            <expression name="value" type="javascript">0</expression>
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="DC">
+            <expression name="value" type="javascript">0</expression>
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="allReportParaFaceVal">
+            <property name="type">report</property>
+        </variable-element>
+    </property>
+</report>

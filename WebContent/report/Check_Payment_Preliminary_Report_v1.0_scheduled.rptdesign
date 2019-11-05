@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="login" id="6650">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="DBPARAM" id="495">
+            <property name="hidden">true</property>
+            <text-property name="helpText">DBPARAM</text-property>
+            <text-property name="promptText">ClientName</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ReportName" id="6656">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <method name="getDefaultValueList"><![CDATA[var reportName = reportContext.getReportRunnable().getReportName();
+reportName=reportName.substr(reportName.lastIndexOf('/') + 1);
+reportName=reportName.substr(0, reportName.lastIndexOf('.'));]]></method>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="SendEmail" id="6651">
+            <property name="hidden">true</property>
+            <text-property name="helpText">SendEmail</text-property>
+            <text-property name="promptText">SendEmail</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="DocType" id="4383">
+            <property name="hidden">true</property>
+            <text-property name="helpText">docType</text-property>
+            <text-property name="promptText">DocType</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">xls</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">xls</property>
+                    <property name="label">xls</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="BPS" id="4">
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.birt );
+rp=new SetDatabaseDetails();
+dbDetails=new Array();
+dbDetails=rp.dbDetailsReader(params["DBPARAM"].value);
+this.setExtensionProperty("odaURL",dbDetails[0]);
+this.setExtensionProperty("odaUser",dbDetails[1]);
+this.setExtensionProperty("odaPassword",dbDetails[2]);]]></method>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">com.ibm.db2.jcc.DB2Driver</property>
+            <property name="odaURL">jdbc:db2://20.15.86.32:50002/ACCELPRU</property>
+            <property name="odaUser">uniauser1</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">VW5pYVUkZXIx</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ALL_VALUES" id="6657">
+            <list-property name="computedColumns">
+                <structure>
+                    <property name="name">INSURED NAME</property>
+                    <expression name="expression">row["INSUREDLASTNAME"]+", "+row["INSUREDFIRSTNAME"]+" "+row["INSUREDMIDDLENAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PAYEE NAME</property>
+                    <expression name="expression">if(row["PAYEELASTNAME"]==null || row["PAYEELASTNAME"]=="")&#13;
+row["CORPNAME"];&#13;
+else&#13;
+row["PAYEEFIRSTNAME"]+" "+row["PAYEELASTNAME"];</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">SITE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">SITE</text-property>
+                    <text-property name="heading">SITE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">REGION</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">REGION</text-property>
+                    <text-property name="heading">REGION</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">COMPANY CODE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">COMPANY CODE</text-property>
+                    <text-property name="heading">COMPANY CODE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLAIM #</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CLAIM #</text-property>
+                    <text-property name="heading">CLAIM #</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">POLICY #</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">POLICY #</text-property>
+                    <text-property name="heading">POLICY #</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">INSUREDLASTNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">INSUREDLASTNAME</text-property>
+                    <text-property name="heading">INSUREDLASTNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">INSUREDFIRSTNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">INSUREDFIRSTNAME</text-property>
+                    <text-property name="heading">INSUREDFIRSTNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">INSUREDMIDDLENAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">INSUREDMIDDLENAME</text-property>
+                    <text-property name="heading">INSUREDMIDDLENAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAYEELASTNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAYEELASTNAME</text-property>
+                    <text-property name="heading">PAYEELASTNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAYEEFIRSTNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAYEEFIRSTNAME</text-property>
+                    <text-property name="heading">PAYEEFIRSTNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CORPNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CORPNAME</text-property>
+                    <text-property name="heading">CORPNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PAYEEGOVID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">PAYEEGOVID</text-property>
+                    <text-property name="heading">PAYEEGOVID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">AMOUNT PAID</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">AMOUNT PAID</text-property>
+                    <text-property name="heading">AMOUNT PAID</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">SITE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">REGION</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">COMPANY CODE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">CLAIM #</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">POLICY #</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">INSUREDLASTNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">INSUREDFIRSTNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">INSUREDMIDDLENAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">PAYEELASTNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">PAYEEFIRSTNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">CORPNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">PAYEEGOVID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">AMOUNT PAID</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">INSURED NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">PAYEE NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">BPS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">SITE</property>
+                    <property name="nativeName">SITE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">REGION</property>
+                    <property name="nativeName">REGION</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">COMPANY CODE</property>
+                    <property name="nativeName">COMPANY CODE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">CLAIM #</property>
+                    <property name="nativeName">CLAIM #</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">POLICY #</property>
+                    <property name="nativeName">POLICY #</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">INSUREDLASTNAME</property>
+                    <property name="nativeName">INSUREDLASTNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">INSUREDFIRSTNAME</property>
+                    <property name="nativeName">INSUREDFIRSTNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">INSUREDMIDDLENAME</property>
+                    <property name="nativeName">INSUREDMIDDLENAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">PAYEELASTNAME</property>
+                    <property name="nativeName">PAYEELASTNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">PAYEEFIRSTNAME</property>
+                    <property name="nativeName">PAYEEFIRSTNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">CORPNAME</property>
+                    <property name="nativeName">CORPNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">PAYEEGOVID</property>
+                    <property name="nativeName">PAYEEGOVID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">AMOUNT PAID</property>
+                    <property name="nativeName">AMOUNT PAID</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">3</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT PROCSITE.DESCR AS SITE,REGION.DESCR AS REGION, LEFT(CCODE.DESCR,3) AS "COMPANY CODE",
+CLAIM.CLAIMNUMBER AS "CLAIM #", PAYMENT.POLICYNUMBER AS "POLICY #",
+PAYMENT.INSUREDLASTNAME,PAYMENT.INSUREDFIRSTNAME,PAYMENT.INSUREDMIDDLENAME,
+PAYMENT.PAYEELASTNAME,PAYMENT.PAYEEFIRSTNAME,PAYMENT.CORPNAME,
+PAYMENT.PAYEEGOVID,PAYMENT.NETBENEFITPAYMENT AS "AMOUNT PAID"
+FROM CLAIMS.PAYMENT PAYMENT INNER JOIN CLAIMS.CLAIM CLAIM ON PAYMENT.CLAIMID=CLAIM.CLAIMID
+INNER JOIN CLAIMS.CLAIMSPAYMENTEXTRACT PAYMENTEXTRACT ON PAYMENT.PAYMENTID = PAYMENTEXTRACT.PAYMENTID
+LEFT OUTER JOIN AV.PROCESSINGSITES PROCSITE ON PAYMENT.PROCESSINGSITE = PROCSITE.INTERNAL_VALUE
+LEFT OUTER JOIN AV.REGION REGION ON PAYMENT.REGIONID=REGION.INTERNAL_VALUE
+LEFT OUTER JOIN AV.COMPANYCODE CCODE ON PAYMENT.COMPANYCODE=CCODE.INTERNAL_VALUE
+WHERE PAYMENTEXTRACT.STATUS='PENDING DISBURSEMENT']]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SITE</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>SITE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SITE</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REGION</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>REGION</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REGION</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>COMPANY CODE</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>COMPANY CODE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>COMPANY CODE</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLAIM #</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CLAIM #</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLAIM #</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>POLICY #</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>POLICY #</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>POLICY #</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>INSUREDLASTNAME</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>INSUREDLASTNAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>INSUREDLASTNAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>INSUREDFIRSTNAME</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>INSUREDFIRSTNAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>INSUREDFIRSTNAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>INSUREDMIDDLENAME</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>INSUREDMIDDLENAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>INSUREDMIDDLENAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PAYEELASTNAME</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PAYEELASTNAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PAYEELASTNAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PAYEEFIRSTNAME</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PAYEEFIRSTNAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PAYEEFIRSTNAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CORPNAME</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CORPNAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CORPNAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PAYEEGOVID</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>40</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PAYEEGOVID</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PAYEEGOVID</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>AMOUNT PAID</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>3</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>4</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>AMOUNT PAID</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>AMOUNT PAID</design:label>
+            <design:formattingHints>
+              <design:displaySize>21</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">custom</property>
+            <property name="height">11in</property>
+            <property name="width">12in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="6658">
+            <property name="dataSet">ALL_VALUES</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">SITE</property>
+                    <text-property name="displayName">SITE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["SITE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">REGION</property>
+                    <text-property name="displayName">REGION</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["REGION"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">COMPANY CODE</property>
+                    <text-property name="displayName">COMPANY CODE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["COMPANY CODE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">CLAIM #</property>
+                    <text-property name="displayName">CLAIM #</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CLAIM #"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">POLICY #</property>
+                    <text-property name="displayName">POLICY #</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["POLICY #"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">CORPNAME</property>
+                    <text-property name="displayName">CORPNAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CORPNAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PAYEEGOVID</property>
+                    <text-property name="displayName">PAYEEGOVID</text-property>
+                    <expression name="expression" type="javascript">if(dataSetRow["PAYEELASTNAME"]==null || dataSetRow["PAYEELASTNAME"]=="")&#13;
+dataSetRow["PAYEEGOVID"].slice(0,2)+"-"+dataSetRow["PAYEEGOVID"].slice(2,9);&#13;
+else&#13;
+dataSetRow["PAYEEGOVID"].slice(0,3)+"-"+dataSetRow["PAYEEGOVID"].slice(3,5)+"-"+dataSetRow["PAYEEGOVID"].slice(5,9);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">AMOUNT PAID</property>
+                    <text-property name="displayName">AMOUNT PAID</text-property>
+                    <expression name="expression" type="javascript">Formatter.format(dataSetRow["AMOUNT PAID"],"########0.00");</expression>
+                    <property name="dataType">decimal</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">INSURED NAME</property>
+                    <text-property name="displayName">INSURED NAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["INSURED NAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PAYEE NAME</property>
+                    <text-property name="displayName">PAYEE NAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["PAYEE NAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">total ssn</property>
+                    <text-property name="displayName">PAYEEGOVID</text-property>
+                    <expression name="expression" type="javascript">if(dataSetRow["PAYEELASTNAME"]==null || dataSetRow["PAYEELASTNAME"]=="")&#13;
+"Total for SSN : "+dataSetRow["PAYEEGOVID"].slice(0,2)+"-"+dataSetRow["PAYEEGOVID"].slice(2,9);&#13;
+else&#13;
+"Total for SSN : "+dataSetRow["PAYEEGOVID"].slice(0,3)+"-"+dataSetRow["PAYEEGOVID"].slice(3,5)+"-"+dataSetRow["PAYEEGOVID"].slice(5,9);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation</property>
+                    <text-property name="displayName">total_ssn_amtpd</text-property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>NewTableGroup1</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">dataSetRow["AMOUNT PAID"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">total_amtpd_company</property>
+                    <text-property name="displayName">COMPANY CODE</text-property>
+                    <expression name="expression" type="javascript">BirtStr.concat('Total For Company ',dataSetRow["COMPANY CODE"]);</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_1</property>
+                    <text-property name="displayName">total_cmpcd_smtpd</text-property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>NewTableGroup2</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">dataSetRow["AMOUNT PAID"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">total_cmpcd_smtpd</text-property>
+                    <expression name="expression" type="javascript">Formatter.format(Total.SUM(dataSetRow["AMOUNT PAID"]),"###,###,##0.00");</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="6712"/>
+            <column id="6713"/>
+            <column id="6714"/>
+            <column id="6715"/>
+            <column id="6716"/>
+            <column id="6720">
+                <property name="repeat">1</property>
+            </column>
+            <column id="6721">
+                <property name="repeat">1</property>
+            </column>
+            <column id="6718"/>
+            <column id="6719"/>
+            <header>
+                <row id="6659">
+                    <property name="textAlign">left</property>
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="6660">
+                        <label id="6661">
+                            <text-property name="text">SITE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6662">
+                        <label id="6663">
+                            <text-property name="text">REGION</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6664">
+                        <label id="6665">
+                            <text-property name="text">COMPANY CODE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6666">
+                        <label id="6667">
+                            <text-property name="text">CLAIM #</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6668">
+                        <label id="6669">
+                            <text-property name="text">POLICY #</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6676">
+                        <label id="6677">
+                            <text-property name="text">INSURED NAME</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6678">
+                        <label id="6679">
+                            <text-property name="text">PAYEE NAME</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6672">
+                        <label id="6673">
+                            <text-property name="text">SSN</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6674">
+                        <label id="6675">
+                            <text-property name="text">AMOUNT PAID</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <group id="6823">
+                <property name="groupName">NewTableGroup2</property>
+                <expression name="keyExpr" type="javascript">row["COMPANY CODE"]</expression>
+                <structure name="toc">
+                    <expression name="expressionValue" type="javascript">row["COMPANY CODE"]</expression>
+                </structure>
+                <property name="hideDetail">false</property>
+                <footer>
+                    <row id="6834">
+                        <property name="fontWeight">bold</property>
+                        <property name="whiteSpace">nowrap</property>
+                        <cell id="6835"/>
+                        <cell id="6836"/>
+                        <cell id="6837"/>
+                        <cell id="6838"/>
+                        <cell id="6839"/>
+                        <cell id="6840"/>
+                        <cell id="6841">
+                            <data id="6844">
+                                <property name="resultSetColumn">total_amtpd_company</property>
+                            </data>
+                        </cell>
+                        <cell id="6842">
+                            <data id="6847">
+                                <property name="resultSetColumn">Column Binding</property>
+                            </data>
+                        </cell>
+                        <cell id="6843"/>
+                    </row>
+                </footer>
+            </group>
+            <group id="6734">
+                <property name="groupName">NewTableGroup1</property>
+                <expression name="keyExpr" type="javascript">row["PAYEEGOVID"]</expression>
+                <structure name="toc">
+                    <expression name="expressionValue" type="javascript">row["PAYEEGOVID"]</expression>
+                </structure>
+                <property name="hideDetail">false</property>
+                <footer>
+                    <row id="6745">
+                        <property name="fontWeight">bold</property>
+                        <property name="whiteSpace">nowrap</property>
+                        <cell id="6746"/>
+                        <cell id="6747"/>
+                        <cell id="6748"/>
+                        <cell id="6749"/>
+                        <cell id="6750"/>
+                        <cell id="6751"/>
+                        <cell id="6752"/>
+                        <cell id="6753">
+                            <data id="6755">
+                                <property name="resultSetColumn">total ssn</property>
+                            </data>
+                        </cell>
+                        <cell id="6754">
+                            <data id="6756">
+                                <property name="resultSetColumn">Aggregation</property>
+                            </data>
+                        </cell>
+                    </row>
+                </footer>
+            </group>
+            <detail>
+                <row id="6680">
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="6681">
+                        <data id="6682">
+                            <property name="resultSetColumn">SITE</property>
+                        </data>
+                    </cell>
+                    <cell id="6683">
+                        <data id="6684">
+                            <property name="resultSetColumn">REGION</property>
+                        </data>
+                    </cell>
+                    <cell id="6685">
+                        <data id="6686">
+                            <property name="resultSetColumn">COMPANY CODE</property>
+                        </data>
+                    </cell>
+                    <cell id="6687">
+                        <data id="6688">
+                            <property name="resultSetColumn">CLAIM #</property>
+                        </data>
+                    </cell>
+                    <cell id="6689">
+                        <data id="6690">
+                            <property name="resultSetColumn">POLICY #</property>
+                        </data>
+                    </cell>
+                    <cell id="6697">
+                        <data id="6698">
+                            <property name="resultSetColumn">INSURED NAME</property>
+                        </data>
+                    </cell>
+                    <cell id="6699">
+                        <data id="6700">
+                            <property name="resultSetColumn">PAYEE NAME</property>
+                        </data>
+                    </cell>
+                    <cell id="6693">
+                        <data id="6694">
+                            <property name="resultSetColumn">PAYEEGOVID</property>
+                        </data>
+                    </cell>
+                    <cell id="6695">
+                        <data id="6696">
+                            <property name="resultSetColumn">AMOUNT PAID</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="6701">
+                    <cell id="6702"/>
+                    <cell id="6703"/>
+                    <cell id="6704"/>
+                    <cell id="6705"/>
+                    <cell id="6706"/>
+                    <cell id="6710"/>
+                    <cell id="6711"/>
+                    <cell id="6708"/>
+                    <cell id="6709"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+    <property name="pageVariables">
+        <variable-element name="startTime">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="storedFileLocation">
+            <property name="type">report</property>
+        </variable-element>
+    </property>
+</report>

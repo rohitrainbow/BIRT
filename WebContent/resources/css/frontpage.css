@@ -1,0 +1,54 @@
+label {
+	font-weight: bolder;
+	font-size: larger;
+}
+
+.select {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	text-align: center;
+}
+table{
+	table-layout: fixed;
+}
+.reports {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+.reports td, .reports th {
+	border: 1px solid #000000;
+	padding: 8px;
+	
+}
+
+.reports tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+.reports tr:hover {
+	background-color: #ddd;
+}
+
+.reports th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #000000;
+	color: white;
+	border-color: grey;
+}
+
+#div {
+	/* 	background-color: #ccc; */
+	
+}
+
+.errormessage
+{
+	
+	text-align: center;
+	color:red;
+	font-weight: bold;
+}

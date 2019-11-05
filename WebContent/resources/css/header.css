@@ -1,0 +1,35 @@
+a.links:link {
+	color: white;
+}
+
+/* visited link */
+a.links:visited {
+	color: white;
+}
+
+/* mouse over link */
+a.links:hover {
+	color: white;
+}
+
+/* selected link */
+a.links:active {
+	color: white;
+}
+
+.header {
+	background-color: #000000;
+	text-align: center;
+	padding-top: 40px;
+	border-color: grey;
+	border-style: solid;
+	padding-top: 40px;
+}
+
+.logo {
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	max-width: 30%;
+	max-height: 30%;
+}

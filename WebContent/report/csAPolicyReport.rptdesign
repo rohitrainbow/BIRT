@@ -1,0 +1,1148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="DBPARAM" id="495">
+            <property name="hidden">false</property>
+            <text-property name="helpText">DBPARAM</text-property>
+            <text-property name="promptText">ClientName</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="PolicySite" id="4372">
+            <property name="hidden">true</property>
+            <text-property name="helpText">Policy Site</text-property>
+            <text-property name="promptText">Policy Site</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="isRequired">false</property>
+            <property name="dataSetName">Policy Site</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["INTERNAL_VALUE"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["DESCR"]</expression>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">--ALL--</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="Regions" id="6657">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">72</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">72</property>
+                    <property name="label">BCOM</property>
+                </structure>
+                <structure>
+                    <property name="value">73</property>
+                    <property name="label">ECOM</property>
+                </structure>
+                <structure>
+                    <property name="value">74</property>
+                    <property name="label">FMSR</property>
+                </structure>
+                <structure>
+                    <property name="value">75</property>
+                    <property name="label">CCFO</property>
+                </structure>
+                <structure>
+                    <property name="value">76</property>
+                    <property name="label">UULA</property>
+                </structure>
+                <structure>
+                    <property name="value">77</property>
+                    <property name="label">APAM</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="BPS" id="4">
+            <method name="beforeOpen"><![CDATA[importPackage( Packages.com.dxc.reports.birt );
+rp=new SetDatabaseDetails();
+dbDetails=new Array();
+dbDetails=rp.dbDetailsReader(params["DBPARAM"].value);
+this.setExtensionProperty("odaURL",dbDetails[0]);
+this.setExtensionProperty("odaUser",dbDetails[1]);
+this.setExtensionProperty("odaPassword",dbDetails[2]);]]></method>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">com.ibm.db2.jcc.DB2Driver</property>
+            <property name="odaURL">jdbc:db2://20.15.86.32:50002/ACCELAIG</property>
+            <property name="odaUser">uniauser1</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">VW5pYVUkZXIx</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Data Set" id="6">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">Company Code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Company Code</text-property>
+                    <text-property name="heading">Company Code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Policy Number</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Policy Number</text-property>
+                    <text-property name="heading">Policy Number</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Face Amount</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">Face Amount</text-property>
+                    <text-property name="heading">Face Amount</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Billing Mode (monthly, quarterly, Bi- annual, Annual)</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Billing Mode (monthly, quarterly, Bi- annual, Annual)</text-property>
+                    <text-property name="heading">Billing Mode (monthly, quarterly, Bi- annual, Annual)</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Modal amount – (Amount being billed)</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">Modal amount – (Amount being billed)</text-property>
+                    <text-property name="heading">Modal amount – (Amount being billed)</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Issued Date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Issued Date</text-property>
+                    <text-property name="heading">Issued Date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Status</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Status</text-property>
+                    <text-property name="heading">Status</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Insured First Name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Insured First Name</text-property>
+                    <text-property name="heading">Insured First Name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Insured Last Name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Insured Last Name</text-property>
+                    <text-property name="heading">Insured Last Name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Issue State</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Issue State</text-property>
+                    <text-property name="heading">Issue State</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Po Resident State</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Po Resident State</text-property>
+                    <text-property name="heading">Po Resident State</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Ins Resident State</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Ins Resident State</text-property>
+                    <text-property name="heading">Ins Resident State</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Line of Business</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">Line of Business</text-property>
+                    <text-property name="heading">Line of Business</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">Company Code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">Policy Number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">Face Amount</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">Billing Mode (monthly, quarterly, Bi- annual, Annual)</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">Modal amount – (Amount being billed)</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">Issued Date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">Status</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">Insured First Name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">Insured Last Name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">Issue State</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">Po Resident State</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">Ins Resident State</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">Line of Business</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[this.queryText = this.queryText.replace("/**REGION**/", " POLICY.REGION_ID IN (" + params["Regions"].value + ")");
+
+if(params["Regions"].value==77)
+{
+ this.queryText = this.queryText.replace("/*PARTICIPATION_ID*/","PORTFOLIO.PARTICIPATION_ID IN (32, 35, 1032)");
+}
+else
+{
+ this.queryText = this.queryText.replace("/*PARTICIPATION_ID*/","PORTFOLIO.PARTICIPATION_ID=32");
+}]]></method>
+            <property name="dataSource">BPS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">Company Code</property>
+                    <property name="nativeName">Company Code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">Policy Number</property>
+                    <property name="nativeName">Policy Number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">Face Amount</property>
+                    <property name="nativeName">Face Amount</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">Billing Mode (monthly, quarterly, Bi- annual, Annual)</property>
+                    <property name="nativeName">Billing Mode (monthly, quarterly, Bi- annual, Annual)</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">Modal amount – (Amount being billed)</property>
+                    <property name="nativeName">Modal amount – (Amount being billed)</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">Issued Date</property>
+                    <property name="nativeName">Issued Date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">Status</property>
+                    <property name="nativeName">Status</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">Insured First Name</property>
+                    <property name="nativeName">Insured First Name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">Insured Last Name</property>
+                    <property name="nativeName">Insured Last Name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">Issue State</property>
+                    <property name="nativeName">Issue State</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">Po Resident State</property>
+                    <property name="nativeName">Po Resident State</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">Ins Resident State</property>
+                    <property name="nativeName">Ins Resident State</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">Line of Business</property>
+                    <property name="nativeName">Line of Business</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT DISTINCT 
+COMPANY.DESCR AS "Company Code", 
+POLICY.POLICY_NUMBER AS "Policy Number",
+POLICY.FACE_AMOUNT AS "Face Amount",
+MO.DESCR AS "Billing Mode (monthly, quarterly, Bi- annual, Annual)",
+POLICY.MODAL_PREMIUM AS "Modal amount – (Amount being billed)",
+POLICY.ISSUE_DATE AS "Issued Date",
+STATUS.DESCR AS "Status",
+INSURED.firstName AS "Insured First Name",
+INSURED.lastName AS "Insured Last Name",
+ISSUESTATE.DESCR AS "Issue State",
+OWNER.OWNERSTATE AS "Po Resident State",
+INSURED.INSUREDSTATE AS "Ins Resident State",
+POLICY.MAJOR_LOB AS "Line of Business"
+FROM CYBERLIFE.POLICY POLICY 
+LEFT OUTER JOIN AV.COMPANYCODE COMPANY ON POLICY.COMPANY_ID=COMPANY.INTERNAL_VALUE 
+LEFT OUTER JOIN AV.POLICYSTATUS STATUS ON POLICY.STATUS_ID=STATUS.INTERNAL_VALUE
+LEFT OUTER JOIN AV.STATE ISSUESTATE ON policy.ISSUE_STATE_CODE_ID=ISSUESTATE.INTERNAL_VALUE
+LEFT OUTER JOIN AV.PAYMENTMODE MO ON MO.INTERNAL_VALUE=POLICY.PREMIUM_MODE_ID
+LEFT OUTER JOIN ( SELECT STATE.DESCR AS OWNERSTATE,PORTFOLIO.CONTRACT_ID
+FROM CLIENT.ADDRESS,CLIENT.CLIENT_ADDRESS,CLIENT.PORTFOLIO PORTFOLIO,AV.STATE STATE 
+WHERE CLIENT.CLIENT_ADDRESS.ADDRESS_ID = CLIENT.ADDRESS.ADDRESS_ID 
+AND CLIENT.CLIENT_ADDRESS.CLIENT_ID =PORTFOLIO.CLIENT_ID AND PORTFOLIO.PARTICIPATION_ID=8 
+AND CLIENT.ADDRESS.STATE=STATE.INTERNAL_VALUE) AS OWNER ON OWNER.CONTRACT_ID=POLICY.POLICY_NUMBER 
+LEFT OUTER JOIN 
+(SELECT STATE.DESCR AS INSUREDSTATE, Party.SEARCH_FIRST_NAME AS firstName,party.BPO_SEARCH_MIDDLE_NAME AS middleName,
+party.SEARCH_LAST_NAME AS lastName,PARTY.CLIENT_ID, PORTFOLIO.CONTRACT_ID
+FROM CLIENT.PARTY PARTY,CLIENT.PORTFOLIO PORTFOLIO,CLIENT.ADDRESS,CLIENT.CLIENT_ADDRESS,AV.STATE STATE 
+WHERE PARTY.CLIENT_ID =PORTFOLIO.CLIENT_ID AND  CLIENT.CLIENT_ADDRESS.ADDRESS_ID = CLIENT.ADDRESS.ADDRESS_ID
+AND CLIENT.CLIENT_ADDRESS.CLIENT_ID =PORTFOLIO.CLIENT_ID 
+AND CLIENT.ADDRESS.STATE=STATE.INTERNAL_VALUE AND /*PARTICIPATION_ID*/) AS INSURED ON INSURED.CONTRACT_ID=POLICY.POLICY_NUMBER
+WHERE /**REGION**/ AND (POLICY.ISSUE_STATE_CODE_ID=6 OR INSURED.INSUREDSTATE='CA' OR OWNER.OWNERSTATE='CA')]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>POLICY_NUMBER</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>15</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>POLICY_NUMBER</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>POLICY_NUMBER</design:label>
+            <design:formattingHints>
+              <design:displaySize>15</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LAST_PREMIUM_PAID_AMOUNT</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>14</design:precision>
+            <design:scale>2</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>LAST_PREMIUM_PAID_AMOUNT</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LAST_PREMIUM_PAID_AMOUNT</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LAST_PREMIUM_PAID_DATE</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>LAST_PREMIUM_PAID_DATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LAST_PREMIUM_PAID_DATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ISSUE_DATE</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ISSUE_DATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ISSUE_DATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>FACE_AMOUNT</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>14</design:precision>
+            <design:scale>2</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>FACE_AMOUNT</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>FACE_AMOUNT</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REGION</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>REGION</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REGION</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ISSUESTATE</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ISSUESTATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ISSUESTATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>COMPANYCODE</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>COMPANYCODE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>COMPANYCODE</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>POLICYSTATUS</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>POLICYSTATUS</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>POLICYSTATUS</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PRODUCTSUBTYPE</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PRODUCTSUBTYPE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PRODUCTSUBTYPE</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PRODUCTTYPE</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PRODUCTTYPE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PRODUCTTYPE</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>FREQUENCY</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>FREQUENCY</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>FREQUENCY</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <property name="rowFetchSize">500</property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Policy Site" id="6654">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">INTERNAL_VALUE</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">INTERNAL_VALUE</text-property>
+                    <text-property name="heading">INTERNAL_VALUE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">DESCR</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">DESCR</text-property>
+                    <text-property name="heading">DESCR</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">INTERNAL_VALUE</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">DESCR</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">BPS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">INTERNAL_VALUE</property>
+                    <property name="nativeName">INTERNAL_VALUE</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">DESCR</property>
+                    <property name="nativeName">DESCR</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT DISTINCT PROCSITES.INTERNAL_VALUE,PROCSITES.DESCR
+FROM claims.CLAIMPOLICY
+LEFT OUTER JOIN AV.PROCESSINGSITES PROCSITES ON
+Claims.CLAIMPOLICY.POLICY_SITE = PROCSITES.INTERNAL_VALUE  ]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>INTERNAL_VALUE</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>INTERNAL_VALUE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>INTERNAL_VALUE</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DESCR</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>DESCR</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DESCR</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Regions" id="6656">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">INTERNAL_VALUE</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">INTERNAL_VALUE</text-property>
+                    <text-property name="heading">INTERNAL_VALUE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">DESCR</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">DESCR</text-property>
+                    <text-property name="heading">DESCR</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">INTERNAL_VALUE</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">DESCR</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">BPS</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">INTERNAL_VALUE</property>
+                    <property name="nativeName">INTERNAL_VALUE</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">DESCR</property>
+                    <property name="nativeName">DESCR</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT * FROM AV.REGION]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>INTERNAL_VALUE</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>INTERNAL_VALUE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>INTERNAL_VALUE</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DESCR</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>DESCR</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DESCR</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">custom</property>
+            <property name="height">11in</property>
+            <property name="width">22in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="6770">
+            <property name="dataSet">Data Set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Company Code</property>
+                    <text-property name="displayName">Company Code</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Company Code"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Policy Number</property>
+                    <text-property name="displayName">Policy Number</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Policy Number"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Face Amount</property>
+                    <text-property name="displayName">Face Amount</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Face Amount"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">Billing Mode (monthly, quarterly, Bi- annual, Annual)</property>
+                    <text-property name="displayName">Billing Mode (monthly, quarterly, Bi- annual, Annual)</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Billing Mode (monthly, quarterly, Bi- annual, Annual)"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Modal amount – (Amount being billed)</property>
+                    <text-property name="displayName">Modal amount – (Amount being billed)</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Modal amount – (Amount being billed)"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">Issued Date</property>
+                    <text-property name="displayName">Issued Date</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Issued Date"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">Status</property>
+                    <text-property name="displayName">Status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Status"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Insured First Name</property>
+                    <text-property name="displayName">Insured First Name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Insured First Name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Insured Last Name</property>
+                    <text-property name="displayName">Insured Last Name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Insured Last Name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Issue State</property>
+                    <text-property name="displayName">Issue State</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Issue State"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Po Resident State</property>
+                    <text-property name="displayName">Po Resident State</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Po Resident State"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Ins Resident State</property>
+                    <text-property name="displayName">Ins Resident State</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Ins Resident State"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Line of Business</property>
+                    <text-property name="displayName">Line of Business</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Line of Business"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="6839"/>
+            <column id="6840"/>
+            <column id="6841"/>
+            <column id="6842"/>
+            <column id="6843"/>
+            <column id="6844"/>
+            <column id="6845"/>
+            <column id="6846"/>
+            <column id="6847"/>
+            <column id="6848"/>
+            <column id="6849"/>
+            <column id="6850"/>
+            <column id="6851"/>
+            <header>
+                <row id="6771">
+                    <property name="textAlign">left</property>
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="6772">
+                        <label id="6773">
+                            <text-property name="text">Company Code</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6774">
+                        <label id="6775">
+                            <text-property name="text">Policy Number</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6776">
+                        <label id="6777">
+                            <text-property name="text">Face Amount</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6778">
+                        <label id="6779">
+                            <text-property name="text">Billing Mode (monthly, quarterly, Bi- annual, Annual)</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6780">
+                        <label id="6781">
+                            <text-property name="text">Modal amount – (Amount being billed)</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6782">
+                        <label id="6783">
+                            <text-property name="text">Issued Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6784">
+                        <label id="6785">
+                            <text-property name="text">Status</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6786">
+                        <label id="6787">
+                            <text-property name="text">Insured First Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6788">
+                        <label id="6789">
+                            <text-property name="text">Insured Last Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6790">
+                        <label id="6791">
+                            <text-property name="text">Issue State</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6792">
+                        <label id="6793">
+                            <text-property name="text">Po Resident State</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6794">
+                        <label id="6795">
+                            <text-property name="text">Ins Resident State</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6796">
+                        <label id="6797">
+                            <text-property name="text">Line of Business</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="6798">
+                    <property name="whiteSpace">nowrap</property>
+                    <cell id="6799">
+                        <data id="6800">
+                            <property name="resultSetColumn">Company Code</property>
+                        </data>
+                    </cell>
+                    <cell id="6801">
+                        <data id="6802">
+                            <property name="resultSetColumn">Policy Number</property>
+                        </data>
+                    </cell>
+                    <cell id="6803">
+                        <data id="6804">
+                            <property name="resultSetColumn">Face Amount</property>
+                        </data>
+                    </cell>
+                    <cell id="6805">
+                        <data id="6806">
+                            <property name="resultSetColumn">Billing Mode (monthly, quarterly, Bi- annual, Annual)</property>
+                        </data>
+                    </cell>
+                    <cell id="6807">
+                        <data id="6808">
+                            <property name="resultSetColumn">Modal amount – (Amount being billed)</property>
+                        </data>
+                    </cell>
+                    <cell id="6809">
+                        <data id="6810">
+                            <property name="resultSetColumn">Issued Date</property>
+                        </data>
+                    </cell>
+                    <cell id="6811">
+                        <data id="6812">
+                            <property name="resultSetColumn">Status</property>
+                        </data>
+                    </cell>
+                    <cell id="6813">
+                        <data id="6814">
+                            <property name="resultSetColumn">Insured First Name</property>
+                        </data>
+                    </cell>
+                    <cell id="6815">
+                        <data id="6816">
+                            <property name="resultSetColumn">Insured Last Name</property>
+                        </data>
+                    </cell>
+                    <cell id="6817">
+                        <data id="6818">
+                            <property name="resultSetColumn">Issue State</property>
+                        </data>
+                    </cell>
+                    <cell id="6819">
+                        <data id="6820">
+                            <property name="resultSetColumn">Po Resident State</property>
+                        </data>
+                    </cell>
+                    <cell id="6821">
+                        <data id="6822">
+                            <property name="resultSetColumn">Ins Resident State</property>
+                        </data>
+                    </cell>
+                    <cell id="6823">
+                        <data id="6824">
+                            <property name="resultSetColumn">Line of Business</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="6825">
+                    <cell id="6826"/>
+                    <cell id="6827"/>
+                    <cell id="6828"/>
+                    <cell id="6829"/>
+                    <cell id="6830"/>
+                    <cell id="6831"/>
+                    <cell id="6832"/>
+                    <cell id="6833"/>
+                    <cell id="6834"/>
+                    <cell id="6835"/>
+                    <cell id="6836"/>
+                    <cell id="6837"/>
+                    <cell id="6838"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>
