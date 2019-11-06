@@ -11,6 +11,19 @@
 <script src="resources/js/jquery-ui.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 	window.history.forward();
+	window.onunload = function () {
+		$.ajax({
+			type : "GET",
+			cache : false,
+			url : "logout",
+			success : function(result) {
+				window.location.href = "sessionexpired";
+			},
+			error : function(e) {
+				alert('Error: ' + e);
+			}
+		});
+	}
 	function noBack() {
 		window.history.forward();
 	}
@@ -40,7 +53,6 @@
 					url : "logout",
 					success : function(result) {
 						window.location.href = "sessionexpired";
-						alert('Error: ' + e);
 					},
 					error : function(e) {
 						alert('Error: ' + e);
